@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { getCurrentUser } from "./apiAuth";
 import supabase from "./supabase";
 
@@ -7,7 +8,7 @@ export const getMessage = async (id) => {
     .select("*")
     .eq("chat_id", id);
 
-  if (error) console.log(error);
+  if (error) throw new Error(error.message);
 
   return data;
 };
@@ -18,43 +19,39 @@ export const sendMessage = async (chatId, message) => {
     .from("messages")
     .insert({ chat_id: chatId, message, sender_id: user.email });
 
-  if (error) console.log(error);
+  if (error) throw new Error(error.message);
 
   return data;
 };
 
 // ADD ORDER ID
-export const createChat = async (product_id, seller_id) => {
-  const user = await getCurrentUser();
-
+// MODIFIED TO ALLOW SELLER TO ACCEPT INSTEAD
+export const createChat = async (product_id, offer_id, buyer_id, seller_id) => {
   let { data: chat, error: chatError } = await supabase
     .from("chatroom")
     .select("*")
     .eq("product_id", product_id)
-    .contains("chat_users", [seller_id, user.email])
+    .contains("chat_users", [buyer_id, seller_id])
     .single();
 
   if (
     chat?.chat_users.length == 2 &&
-    chat?.chat_users.includes(seller_id) &&
-    chat?.chat_users.includes(user.email)
-  ) {
-    console.log("Room Exists!");
+    chat?.chat_users.includes(buyer_id) &&
+    chat?.chat_users.includes(seller_id)
+  )
     return;
-  }
 
   let { data, error } = await supabase.from("chatroom").insert({
     product_id,
-    chat_users: [seller_id, user.email],
+    chat_users: [buyer_id, seller_id],
+    offer_id,
   });
 
-  console.log(data);
-
   if (chatError || error) {
-    console.log("error");
+    throw new Error(chatError.message || error.message);
   }
 
-  return data;
+  return { chat, data };
 };
 
 export const getChats = async () => {
@@ -63,7 +60,8 @@ export const getChats = async () => {
   let { data: chat, error: chatError } = await supabase
     .from("chatroom")
     .select("*, products(*)")
-    .contains("chat_users", [user.email]);
+    .contains("chat_users", [user.email])
+    .eq("isCompleted", false);
 
   const users = chat
     .map((c) => c.chat_users.filter((u) => u != user.email))
@@ -75,7 +73,7 @@ export const getChats = async () => {
     .in("email", users);
 
   if (chatError || userError) {
-    console.error(chatError);
+    throw new Error(chatError.message || userError.message);
   }
 
   const newChat = [Array(...chat), user, data];

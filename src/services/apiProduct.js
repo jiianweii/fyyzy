@@ -17,6 +17,21 @@ export const getProducts = async (limit) => {
   return products;
 };
 
+export const getProductsByCurrentSelection = async (curr_id, id) => {
+  let { data: products, error } = await supabase
+    .from("products")
+    .select("*")
+    .neq("id", curr_id)
+    .eq("created_by", id)
+    .limit(5);
+
+  if (error) {
+    console.error(error);
+  }
+
+  return products;
+};
+
 export const getProductsByCreator = async () => {
   let { data, error } = await supabase.auth.getUser();
   let { data: products, error: prodError } = await supabase
@@ -158,4 +173,23 @@ export const createProduct = async (product) => {
     throw new Error(error.message);
   }
   return data;
+};
+
+export const completeTransaction = async (
+  product_id,
+  buyer_id,
+  offer_id,
+  chat_id
+) => {
+  let { error } = await supabase
+    .from("products")
+    .update({ isSold: true, sold_to: buyer_id })
+    .eq("id", product_id);
+
+  let { error: offerError } = await supabase
+    .from("offers")
+    .update({ status: "COMPLETED" })
+    .eq("id", offer_id);
+
+  if (error || offerError) throw new Error(error.message || offerError.message);
 };

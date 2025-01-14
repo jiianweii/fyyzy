@@ -6,7 +6,9 @@ import { getChats, getMessage, sendMessage } from "../../services/apiMessenger";
 import Loader from "../../ui/Loader";
 import { useEffect, useState } from "react";
 import supabase from "../../services/supabase";
-import toast from "react-hot-toast";
+
+import OfferMessage from "./Inbox/OfferMessage";
+import Review from "./Inbox/Review";
 
 const InboxDiv = styled.div`
   display: flex;
@@ -17,6 +19,8 @@ const InboxDiv = styled.div`
   gap: 2rem;
 
   color: #fff;
+
+  position: relative;
 `;
 
 const RowDiv = styled.div`
@@ -141,53 +145,6 @@ const ChatUserStatus = styled.div`
   background-color: ${(props) => (props.active ? "#4fca3f" : "#c73939")};
 `;
 
-const TradeOffer = styled.div`
-  display: flex;
-  height: 75px;
-  justify-content: space-between;
-  padding: 0 1.5rem;
-  align-items: center;
-  background-color: #fff;
-`;
-
-const TradeInfo = styled.div`
-  display: flex;
-  gap: 1rem;
-  height: 80%;
-
-  & img {
-    height: 100%;
-    width: 50px;
-  }
-  & div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: #000;
-    gap: 0.4rem;
-
-    & h1 {
-      font-size: 1rem;
-    }
-    & p {
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
-  }
-`;
-
-const TradeAction = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
-
-const TradeButton = styled.button`
-  padding: 1rem;
-  background-color: ${(props) => props.bg};
-  color: #fff;
-  border: none;
-`;
-
 const ChatMessages = styled.div`
   display: flex;
   flex-direction: column;
@@ -195,7 +152,7 @@ const ChatMessages = styled.div`
   padding: 1rem;
   max-height: 80vh;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const ChatMessage = styled.div`
@@ -245,6 +202,7 @@ const ChatResponder = styled.div`
 `;
 
 export default function Inbox() {
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [currentInfo, setCurrentInfo] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [chatId, setChatId] = useState(null);
@@ -284,6 +242,12 @@ export default function Inbox() {
     setChatId(chatInfo.id);
     getMessages(chatInfo.id);
   }
+  // TO ENSURE CHAT ARE REMOVED IF BUYER REVIEWED
+  function handleClearChat() {
+    setCurrentInfo({});
+    setCurrentUser({});
+    setChatId(null);
+  }
 
   function handleOnChange(e) {
     setMessage(e.target.value);
@@ -294,8 +258,18 @@ export default function Inbox() {
     setMessage("");
   }
 
+  console.log(currentInfo);
+
   return (
     <InboxDiv>
+      {isOpenModal && (
+        <Review
+          setIsOpenModal={setIsOpenModal}
+          seller_id={currentInfo.products.created_by}
+          chatId={chatId}
+          handleClearChat={handleClearChat}
+        />
+      )}
       <RowDiv>
         <ChatGroup>
           <ChatHeader>
@@ -311,12 +285,12 @@ export default function Inbox() {
                   <ChatPartyInfo>
                     <img
                       src={
-                        chat[2][i].image ??
+                        chat[2][i]?.image ??
                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4n4D5jth4fm4GE7ut7lWW-04lnDO2OkD-sg&s"
                       }
                     />
                     <div>
-                      <h1>{chat[2][i].name}</h1>
+                      <h1>{chat[2][i]?.name}</h1>
                       <h2>{c.products.name}</h2>
                       <p>Click here to view your messages</p>
                     </div>
@@ -330,7 +304,7 @@ export default function Inbox() {
         </ChatGroup>
         <ChatConversation>
           <Column>
-            {currentUser.name && (
+            {currentUser?.name && (
               <ChatUser>
                 <h1>{currentUser.name}</h1>
                 {/* <div>
@@ -339,23 +313,12 @@ export default function Inbox() {
                 </div> */}
               </ChatUser>
             )}
-            {currentUser.name && (
-              <TradeOffer>
-                <TradeInfo>
-                  <img src={currentInfo.products.images[0]} />
-                  <div>
-                    <h1>{currentInfo.products.name}</h1>
-                    <p>
-                      Offer: 2023 Bowman Sterling Prospect Daniel Montesino
-                      ROOKIE AUTO{" "}
-                    </p>
-                  </div>
-                </TradeInfo>
-                <TradeAction>
-                  <TradeButton bg="green">ACCEPT</TradeButton>
-                  <TradeButton bg="red">DECLINE</TradeButton>
-                </TradeAction>
-              </TradeOffer>
+            {currentUser?.name && (
+              <OfferMessage
+                currentInfo={currentInfo}
+                currentUser={currentUser}
+                setIsOpenModal={setIsOpenModal}
+              />
             )}
 
             {chatId && (
@@ -368,9 +331,13 @@ export default function Inbox() {
                         chat[1].email == d.sender_id ? "sender" : "receiver"
                       }
                     >
-                      <ChatMessageName>
-                        {chat[1].email == d.sender_id ? "Me" : currentUser.name}
-                      </ChatMessageName>
+                      {d.sender_id == currentChat?.[i - 1]?.sender_id || (
+                        <ChatMessageName>
+                          {chat[1].email == d.sender_id
+                            ? "Me"
+                            : currentUser.name}
+                        </ChatMessageName>
+                      )}
                       <ChatMessageBox>{d.message}</ChatMessageBox>
                     </ChatMessage>
                   );

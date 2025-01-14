@@ -7,6 +7,7 @@ import { getUserById } from "../../../services/apiUser";
 import { convertCurrency, shortenInfo } from "../../helper/helper";
 import { updateOffer } from "../../../services/apiOffer";
 import toast from "react-hot-toast";
+import { createChat } from "../../../services/apiMessenger";
 
 const FullScreen = styled.div`
   width: 100%;
@@ -209,17 +210,22 @@ export default function Offer({ currentOffer, setIsOpenModal }) {
     queryFn: () => getUserById(offer.offerer_id),
   });
 
-  function handleAccept() {
+  async function handleAccept() {
     updateOffer(offer.id, "ACCEPTED");
+    createChat(product.id, offer.id, offer.offerer_id, product.created_by);
 
-    toast.success(`You have accepted offer from ${user.name}`);
+    toast.success(`You have accepted offer from ${user[0].name}`);
     setIsOpenModal(false);
   }
   function handleDecline() {
     updateOffer(offer.id, "DECLINED");
 
-    toast.success(`You have rejected offer from ${user.name}`);
+    toast.success(`You have rejected offer from ${user[0].name}`);
     setIsOpenModal(false);
+  }
+
+  function handleExit(e) {
+    if (e.target.id == "fullscreen") setIsOpenModal(false);
   }
 
   if (isPending) return <Loader />;
@@ -227,7 +233,7 @@ export default function Offer({ currentOffer, setIsOpenModal }) {
   const current_user = user[0];
 
   return (
-    <FullScreen>
+    <FullScreen id="fullscreen" onClick={handleExit}>
       <OfferDiv>
         <OfferHeader>
           <OfferUser>

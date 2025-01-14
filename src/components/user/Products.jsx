@@ -61,11 +61,13 @@ export default function Products() {
           >
             Add New Product
           </CreateButton>
-          <Select>
-            <option value="+date">Sort By (Most Recent)</option>
-            <option value="+rating">Sort By (Highest Ratings)</option>
-            <option value="-rating">Sort By (Lowest Ratings)</option>
-          </Select>
+          {data.length > 0 && (
+            <Select>
+              <option value="+date">Sort By (Most Recent)</option>
+              <option value="+rating">Sort By (Highest Ratings)</option>
+              <option value="-rating">Sort By (Lowest Ratings)</option>
+            </Select>
+          )}
         </UtilHead>
       </Utils>
       {data.length > 0 ? (

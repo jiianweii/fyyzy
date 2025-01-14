@@ -14,7 +14,7 @@ import { Div, H1 } from "../../styles/GlobalStyled";
 import { useQuery } from "@tanstack/react-query";
 import { getUserInfo } from "../../services/apiUser";
 import Loader from "../../ui/Loader";
-import { convertCurrency, convertDate } from "../helper/helper";
+import { convertCurrency, convertDate, convertPercent } from "../helper/helper";
 import Table from "./Table/Table";
 import Offer from "./HomePage/Offer";
 import { useState } from "react";
@@ -49,15 +49,12 @@ export default function Home() {
 
   if (isPending) return <Loader />;
 
-  let price = 0,
-    ratings = 0;
+  let price = 0;
 
   data.products.map((d) =>
     d.isSold && d.sold_to ? (price += d.price || d.biddingPrice) : price
   );
-  data.reviews.map((r) => (ratings += r.rating * 10));
 
-  ratings = ratings * data.reviews.length + "%";
   return (
     <Div>
       {isOpenModal && (
@@ -87,44 +84,50 @@ export default function Home() {
           icon={faStar}
           backgroundColor={"#DEBD62"}
           type="RATINGS"
-          number={ratings}
+          number={convertPercent(data.reviews)}
         />
         {/* <SecInfoCard start={1} end={3} header="Recent Products" />
         <SecInfoCard start={3} end={-1} header="Recent Reviews" /> */}
         <MainInfoCard header="All Trade Offers">
-          <Table>
-            <thead>
-              <th>DATE CREATED</th>
-              <th>TYPE</th>
-              <th>PRODUCT</th>
-              <th>BUYER</th>
-              <th>ACTION</th>
-            </thead>
-            <tbody>
-              {data.offers.map((d) => {
-                const product = data.products.find((p) => p.id == d.product_id);
-                if (d.bidOffer) return;
-                return (
-                  <tr>
-                    <td>{convertDate(d.created_at)}</td>
-                    <td>{d.buyOffer ? "NORMAL" : "TRADE"}</td>
-                    <td>{product.name}</td>
-                    <td>{d.offerer_id}</td>
-                    <td>
-                      <Button
-                        onClick={() => {
-                          setCurrentOffer({ offer: d, product });
-                          setIsOpenModal(true);
-                        }}
-                      >
-                        View Offer
-                      </Button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
+          {data.offers.length > 0 ? (
+            <Table>
+              <thead>
+                <th>DATE CREATED</th>
+                <th>TYPE</th>
+                <th>PRODUCT</th>
+                <th>BUYER</th>
+                <th>ACTION</th>
+              </thead>
+              <tbody>
+                {data.offers.map((d) => {
+                  const product = data.products.find(
+                    (p) => p.id == d.product_id
+                  );
+                  if (d.bidOffer) return;
+                  return (
+                    <tr>
+                      <td>{convertDate(d.created_at)}</td>
+                      <td>{d.buyOffer ? "NORMAL" : "TRADE"}</td>
+                      <td>{product.name}</td>
+                      <td>{d.offerer_id}</td>
+                      <td>
+                        <Button
+                          onClick={() => {
+                            setCurrentOffer({ offer: d, product });
+                            setIsOpenModal(true);
+                          }}
+                        >
+                          View Offer
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          ) : (
+            <p>You have no offers at the moment.</p>
+          )}
         </MainInfoCard>
       </InfoCardDiv>
     </Div>

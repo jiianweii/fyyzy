@@ -36,6 +36,7 @@ const Form = styled.form`
   gap: 1rem;
   width: 30%;
   height: 80%;
+  overflow-y: auto;
 
   position: relative;
 

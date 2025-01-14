@@ -40,3 +40,41 @@ export const getUserInfo = async () => {
 
   return { products, reviews, offers };
 };
+
+export const getSellerInfo = async (id) => {
+  let { data: user, error: userError } = await supabase
+    .from("users")
+    .select("*")
+    .eq("email", id);
+
+  let { data: products, error: prodError } = await supabase
+    .from("products")
+    .select("*")
+    .eq("created_by", id);
+
+  let { data: reviews, error: reviewError } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("seller_id", id);
+
+  if (prodError || reviewError)
+    throw new Error(prodError.message || reviewError.message);
+
+  // GET ALL OFFERS
+  const ids = products.map((product) => product.id);
+
+  let { data: offers, error: offerError } = await supabase
+    .from("offers")
+    .select("*")
+    .in("product_id", ids);
+
+  if (userError || prodError || reviewError || offerError)
+    throw new Error(
+      userError.message ||
+        prodError.message ||
+        reviewError.message ||
+        offerError.message
+    );
+
+  return { user, products, reviews, offers };
+};

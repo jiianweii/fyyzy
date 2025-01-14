@@ -1,5 +1,8 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { getSellerInfo } from "../../services/apiUser";
+import { convertDate, convertPercent } from "../helper/helper";
 
 const StyledSellerInfoDiv = styled.div`
   display: flex;
@@ -22,11 +25,10 @@ const StyledSellerImg = styled.div`
   width: 35px;
   height: 35px;
 
-  & div {
+  & img {
     width: 100%;
     height: 100%;
     border-radius: 9999px;
-    background-color: #2c2c2c;
   }
 `;
 
@@ -50,17 +52,28 @@ const StyledButton = styled(Link)`
   color: #fff;
 `;
 
-export default function SellerInfo() {
+export default function SellerInfo({ id }) {
+  const { data, isPending } = useQuery({
+    queryKey: [id],
+    queryFn: () => getSellerInfo(id),
+  });
+
+  if (isPending) return <div>Loading</div>;
+
+  console.log(data);
+
   return (
     <StyledSellerInfoDiv>
       <StyledSellerDiv>
         <StyledSellerImg>
-          <div></div>
+          <img src={data.user[0].image} />
         </StyledSellerImg>
         <StyledSellerInfo>
-          <h1>JohnSellsCard</h1>
+          <h1>{data.user[0].name}</h1>
           <p>
-            95.8% Positive Reviews | 64 Followers | 12 Products | Since 2023
+            {convertPercent(data.reviews)} Positive Reviews |
+            {" " + data.products.length + " "}
+            Products | Since {convertDate(data.user[0].created_at)}
           </p>
         </StyledSellerInfo>
       </StyledSellerDiv>

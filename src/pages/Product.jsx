@@ -1,9 +1,5 @@
 import styled from "styled-components";
-import {
-  StyledDiv,
-  StyledHomePageItemsDiv,
-  StyledMiniLink,
-} from "../styles/GlobalStyled";
+import { StyledDiv, StyledMiniLink } from "../styles/GlobalStyled";
 import { Link, useParams } from "react-router-dom";
 import ProductImage from "../components/product/ProductImage";
 import ProductInfo from "../components/product/ProductInfo";
@@ -15,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import OfferModal from "../components/modal/OfferModal";
 import { useState } from "react";
+import OtherListing from "../components/product/OtherListing";
 
 const StyledProductSection = styled.section`
   display: flex;
@@ -91,37 +88,7 @@ export default function Product() {
           />
         </StyledProductInfoDiv>
         <StyledH1>Other Listing</StyledH1>
-        <StyledHomePageItemsDiv
-          alignment="flex-start"
-          width="100%"
-          gap="2.4rem"
-        >
-          <BuyNowCard
-            name="1997 Topps Chrome Refractor Stephon Marbury #13 PSA 9 MINT"
-            price="$29.90"
-            date="1d+"
-          />
-          <BuyNowCard
-            name="1997 Topps Chrome Refractor Stephon Marbury #13 PSA 9 MINT"
-            price="$29.90"
-            date="1d+"
-          />
-          <BuyNowCard
-            name="1997 Topps Chrome Refractor Stephon Marbury #13 PSA 9 MINT"
-            price="$29.90"
-            date="1d+"
-          />
-          <BuyNowCard
-            name="1997 Topps Chrome Refractor Stephon Marbury #13 PSA 9 MINT"
-            price="$29.90"
-            date="1d+"
-          />
-          <BuyNowCard
-            name="1997 Topps Chrome Refractor Stephon Marbury #13 PSA 9 MINT"
-            price="$29.90"
-            date="1d+"
-          />
-        </StyledHomePageItemsDiv>
+        <OtherListing curr_id={id} seller_id={data.products[0].created_by} />
       </StyledProductSection>
     </StyledDiv>
   );

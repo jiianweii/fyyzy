@@ -50,6 +50,20 @@ export const getOffer = async (id) => {
   return data;
 };
 
+export const getOfferByUserId = async (offer_id) => {
+  const user = await getCurrentUser();
+
+  let { data, error } = await supabase
+    .from("offers")
+    .select("*")
+    .eq("id", offer_id)
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return { offers: data, email: user.email };
+};
+
 export const updateOffer = async (id, status) => {
   let { data, error } = await supabase
     .from("offers")

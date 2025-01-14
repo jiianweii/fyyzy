@@ -42,3 +42,10 @@ export const shortenInfo = (info) => {
 
   return name + "...";
 };
+
+export const convertPercent = (arr) => {
+  let ratings = 0;
+  arr.map((r) => (ratings += (r.rating / 5) * 100));
+
+  return Number(ratings / arr.length).toFixed(2) + "%";
+};

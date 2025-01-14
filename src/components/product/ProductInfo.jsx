@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import SellerInfo from "./SellerInfo";
 import { convertCurrency, convertDate } from "./../helper/helper";
-import { createChat } from "../../services/apiMessenger";
 
 const StyledInfoSection = styled.section`
   display: flex;
@@ -73,7 +72,6 @@ const StyledUl = styled.ul`
 
 export default function ProductInfo({ type, data, setIsOpenModal, offers }) {
   function handleClick() {
-    // createChat(data.id, data.created_by);
     setIsOpenModal(true);
   }
 
@@ -128,7 +126,7 @@ export default function ProductInfo({ type, data, setIsOpenModal, offers }) {
         <StyledButton onClick={handleClick}>BUY NOW</StyledButton>
       )}
 
-      <SellerInfo />
+      <SellerInfo id={data.created_by} />
       <StyledDescription>
         <h1>Description:</h1>
         <p>{data.description}</p>
