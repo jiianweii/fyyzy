@@ -83,6 +83,17 @@ const FormRow = styled.div`
   justify-content: ${(props) => props.jc || "space-between"};
 `;
 
+const FormColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  & textarea {
+    resize: none;
+    padding: 0.5rem;
+  }
+`;
+
 const FormImages = styled.div`
   display: flex;
   flex-direction: column;
@@ -186,6 +197,7 @@ export default function ProductModal() {
       });
       return;
     }
+
     setProduct({ ...product, [type]: e.target.value });
   }
 
@@ -228,7 +240,6 @@ export default function ProductModal() {
       product.type &&
       (product.tradeOffer || product.price || product.biddingPrice)
     ) {
-      console.log(product);
       const data = createProduct(product);
 
       if (data) {
@@ -360,15 +371,16 @@ export default function ProductModal() {
             <FormHeader>
               <h1>TYPE OF PRODUCT (TRADE)</h1>
             </FormHeader>
-            <FormRow>
-              <label htmlFor="looking">Looking For:</label>
-              <input
-                type="text"
+            <FormColumn>
+              <label htmlFor="looking">
+                Looking For: (Please Add ',' OR comma after each item)
+              </label>
+              <textarea
                 id="looking"
                 value={product.tradeOffer}
                 onChange={(e) => handleOnChange(e, "tradeOffer")}
               />
-            </FormRow>
+            </FormColumn>
           </>
         )}
         {(product.type == "Auction" || productType == "Auction") && (

@@ -35,7 +35,7 @@ const ChatGroup = styled.div`
   background-color: #fff;
   height: 100%;
   width: 30%;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const ChatParty = styled.div`

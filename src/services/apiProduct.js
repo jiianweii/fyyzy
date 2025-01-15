@@ -8,6 +8,7 @@ export const getProducts = async (limit) => {
   let { data: products, error } = await supabase
     .from("products")
     .select("*")
+    .neq("isSold", true)
     .limit(limit);
 
   if (error) {
@@ -22,6 +23,7 @@ export const getProductsByCurrentSelection = async (curr_id, id) => {
     .from("products")
     .select("*")
     .neq("id", curr_id)
+    .neq("isSold", true)
     .eq("created_by", id)
     .limit(5);
 
@@ -135,7 +137,7 @@ export const updateProduct = async (product) => {
   }
 
   product.images = imagesUrls;
-
+  product.tradeOffer = product.tradeOffer.split(",");
   product.created_by = user.email;
 
   let { data, error } = await supabase

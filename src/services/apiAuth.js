@@ -7,7 +7,7 @@ export async function login(email, password) {
   });
 
   if (error) {
-    console.error(error);
+    throw new Error(error.message);
   }
 
   return data;
@@ -21,7 +21,7 @@ export async function getCurrentUser() {
   const { data: user, error } = await supabase.auth.getUser();
 
   if (error) {
-    console.error(error);
+    throw new Error(error.message);
   }
 
   return user?.user;
@@ -31,7 +31,7 @@ export async function logout() {
   const { error } = await supabase.auth.signOut();
 
   if (error) {
-    console.error(error);
+    throw new Error(error.message);
   }
 }
 
@@ -42,7 +42,7 @@ export async function insertUser(name, email) {
   });
 
   if (error) {
-    console.error(error);
+    throw new Error(error.message);
   }
 }
 
@@ -54,8 +54,7 @@ export async function register(name, email, password) {
     .single();
 
   if (user) {
-    console.log("USER EXIST");
-    return;
+    return null;
   }
 
   const { data, error } = await supabase.auth.signUp({
@@ -64,7 +63,7 @@ export async function register(name, email, password) {
   });
 
   if (error || userError) {
-    console.error(error);
+    throw new Error(error.message || userError.message);
   }
 
   if (data.user.aud === "authenticated") insertUser(name, email);

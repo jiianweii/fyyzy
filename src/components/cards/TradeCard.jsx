@@ -76,9 +76,7 @@ export default function TradeCard({ id, name, tradeOffer, date, images }) {
         <StyledCardBtmHeader>
           <StyledBiddingDiv>
             <h1>Looking For:</h1>
-            {tradeOffer.map((t) => {
-              return <p>{t}</p>;
-            })}
+            <p>{tradeOffer.length} items</p>
           </StyledBiddingDiv>
           <h1>{date}</h1>
         </StyledCardBtmHeader>

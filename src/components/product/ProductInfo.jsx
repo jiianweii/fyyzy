@@ -106,7 +106,7 @@ export default function ProductInfo({ type, data, setIsOpenModal, offers }) {
       )}
       {type == "Trade" && (
         <StyledBidsDiv>
-          <h1>I am looking for ANY:</h1>
+          <h1>I am looking for:</h1>
           <StyledUl>
             {data.tradeOffer.map((d) => {
               return <li>{d}</li>;

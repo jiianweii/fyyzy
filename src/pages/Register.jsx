@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { register } from "../services/apiAuth";
 import { dataTagErrorSymbol } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -90,24 +91,46 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [number, setNumber] = useState(81234567);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [number, setNumber] = useState(null);
 
   const validate = async (data) => {
     const res = await data;
+    setName("");
+    setEmail("");
+    setPassword("");
+    setNumber(null);
+    setConfirmPassword("");
+
+    if (res == null) {
+      toast.error("The email has been taken! Please use another email.");
+      return;
+    }
+
     if (res.user.aud === "authenticated") {
-      setName("");
-      setEmail("");
-      setPassword("");
+      toast.success("Please check your email to activate your account.");
     }
   };
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!email || !password) return;
+    if (!email || !password || !name || !number || !confirmPassword) {
+      toast.error("Please fill in all of the fields");
+      return;
+    }
+
+    if (password.length < 8) {
+      toast.error("Your password must be more than 8 characters");
+      return;
+    }
+
+    if (password != confirmPassword) {
+      toast.error("The password and confirm password does not match!");
+      return;
+    }
 
     const data = register(name, email.toLowerCase(), password);
 
-    if (data == null) return; // Add Toast
     validate(data);
   }
 
@@ -137,7 +160,7 @@ export default function Register() {
             <input
               type="text"
               placeholder="Phone Number"
-              value={number}
+              value={number ?? ""}
               onChange={(e) => setNumber(e.target.value)}
             />
             <input
@@ -146,7 +169,12 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <input type="password" placeholder="Confirm Password" />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
           </StyledInputDiv>
 
           <StyledButton type="submit">Register</StyledButton>

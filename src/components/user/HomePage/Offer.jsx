@@ -218,7 +218,7 @@ export default function Offer({ currentOffer, setIsOpenModal }) {
     setIsOpenModal(false);
   }
   function handleDecline() {
-    updateOffer(offer.id, "DECLINED");
+    updateOffer(offer.id, "REJECTED");
 
     toast.success(`You have rejected offer from ${user[0].name}`);
     setIsOpenModal(false);
@@ -265,6 +265,12 @@ export default function Offer({ currentOffer, setIsOpenModal }) {
                     <p>{convertCurrency(product.price)}</p>
                   </OfferTradePrice>
                 )}
+                {product.type == "Auction" && (
+                  <OfferTradePrice>
+                    <h1>Starting Bid:</h1>
+                    <p>{convertCurrency(product.biddingPrice)}</p>
+                  </OfferTradePrice>
+                )}
               </OfferTradePrimary>
               {product.type == "Trade" && (
                 <OfferTradeSecondary>
@@ -288,6 +294,12 @@ export default function Offer({ currentOffer, setIsOpenModal }) {
                   <OfferTradePrice>
                     <h1>Offered Price:</h1>
                     <p>{convertCurrency(offer.buyOffer)}</p>
+                  </OfferTradePrice>
+                )}
+                {product.type == "Auction" && (
+                  <OfferTradePrice>
+                    <h1>Offered Price:</h1>
+                    <p>{convertCurrency(offer.bidOffer)}</p>
                   </OfferTradePrice>
                 )}
               </OfferTradePrimary>

@@ -15,7 +15,7 @@ export const compareDate = (startDate, endDate) => {
     return "NOT STARTED";
   if (
     fDate.valueOf() < currentDate.valueOf() &&
-    sDate.valueOf() < currentDate.valueOf()
+    sDate.valueOf() <= currentDate.valueOf()
   ) {
     return "ENDED";
   }

@@ -10,6 +10,7 @@ export default function Notification() {
   const { data: chat, isPending } = useQuery({
     queryKey: ["chatroom"],
     queryFn: () => findChat(data.email),
+    enabled: isAuthenticated,
   });
 
   const ids =

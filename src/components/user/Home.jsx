@@ -103,11 +103,16 @@ export default function Home() {
                   const product = data.products.find(
                     (p) => p.id == d.product_id
                   );
-                  if (d.bidOffer) return;
                   return (
                     <tr>
                       <td>{convertDate(d.created_at)}</td>
-                      <td>{d.buyOffer ? "NORMAL" : "TRADE"}</td>
+                      <td>
+                        {d.buyOffer
+                          ? "NORMAL"
+                          : d.bidOffer
+                          ? "AUCTION WINNER"
+                          : "TRADE"}
+                      </td>
                       <td>{product.name}</td>
                       <td>{d.offerer_id}</td>
                       <td>

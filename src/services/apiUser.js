@@ -34,6 +34,7 @@ export const getUserInfo = async () => {
   let { data: offers, error: offerError } = await supabase
     .from("offers")
     .select("*")
+    .eq("status", "")
     .in("product_id", ids);
 
   if (offerError) throw new Error(offerError.message);

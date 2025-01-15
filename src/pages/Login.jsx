@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { login } from "../services/apiAuth";
 import { useState } from "react";
 import { useLogin } from "../components/authentication/useLogin";
+import toast from "react-hot-toast";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -105,16 +106,23 @@ export default function Login() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!email || !password) return;
-    mutate(
-      { email: email.toLowerCase(), password },
-      {
-        onSettled: () => {
-          setEmail("");
-          setPassword("");
-        },
-      }
-    );
+    if (!email || !password) {
+      toast.error("Please enter your email and password");
+      return;
+    }
+    try {
+      mutate(
+        { email: email.toLowerCase(), password },
+        {
+          onSettled: () => {
+            setEmail("");
+            setPassword("");
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <StyledDiv>

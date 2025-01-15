@@ -8,6 +8,7 @@ export const createBidOffer = async (id, bidOffer) => {
     product_id: id,
     offerer_id: user.email,
     bidOffer,
+    status: "PENDING",
   });
 
   if (error) throw new Error(error.message);
