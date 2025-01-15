@@ -46,7 +46,7 @@ const CloseBtn = styled.button`
 
 export default function Dashboard() {
   const [isOpenSideBar, setIsOpenSideBar] = useState(true);
-  const { isOpenModal, setIsOpenModal } = useModalContext();
+  const { isOpenModal } = useModalContext();
 
   return (
     <Section>

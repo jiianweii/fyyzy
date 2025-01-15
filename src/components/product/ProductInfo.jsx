@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import SellerInfo from "./SellerInfo";
 import { convertCurrency, convertDate } from "./../helper/helper";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../authentication/useUser";
+import Loader from "../../ui/Loader";
+import toast from "react-hot-toast";
 
 const StyledInfoSection = styled.section`
   display: flex;
@@ -71,9 +75,17 @@ const StyledUl = styled.ul`
 `;
 
 export default function ProductInfo({ type, data, setIsOpenModal, offers }) {
+  const navigate = useNavigate();
+  const { isLoading, isAuthenticated } = useUser();
   function handleClick() {
+    if (!isAuthenticated && !isLoading) {
+      toast.error("Please login before proceeding");
+      navigate("/login");
+    }
     setIsOpenModal(true);
   }
+
+  if (isLoading) return <Loader />;
 
   return (
     <StyledInfoSection>
