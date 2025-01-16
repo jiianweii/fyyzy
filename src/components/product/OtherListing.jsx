@@ -9,7 +9,7 @@ import { convertCurrency, convertDate } from "../helper/helper";
 
 export default function OtherListing({ seller_id, curr_id }) {
   const { data, isPending } = useQuery({
-    queryKey: ["otherProducts"],
+    queryKey: ["otherProducts", curr_id],
     queryFn: () => getProductsByCurrentSelection(curr_id, seller_id),
   });
 

@@ -48,7 +48,12 @@ export default function Product() {
     queryFn: () => getProductById(id),
   });
 
-  if (isPending) return <Loader />;
+  if (isPending)
+    return (
+      <StyledDiv bg="#f0f0f0">
+        <Loader />
+      </StyledDiv>
+    );
 
   if (error) {
     return <div>{error.message}</div>;
