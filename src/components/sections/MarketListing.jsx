@@ -1,11 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { StyledHomePageItemsDiv } from "../../styles/GlobalStyled";
 import BuyNowCard from "../cards/BuyNowCard";
-import {
-  getProducts,
-  getProductsByAuctionId,
-  getProductsByCategory,
-} from "../../services/apiProduct";
+import { getProductsByFilter } from "../../services/apiProduct";
 import Loader from "../../ui/Loader";
 import { convertCurrency, convertDate } from "../helper/helper";
 import AuctionProductCard from "../cards/AuctionProductCard";
@@ -14,20 +10,19 @@ import TradeCard from "../cards/TradeCard";
 export default function MarketListing({ limit, type, category, id }) {
   const { data, isPending } = useQuery({
     queryKey: ["product", id, category],
-    queryFn:
-      type == "auction"
-        ? () => getProductsByAuctionId(id)
-        : category
-        ? () => getProductsByCategory(category)
-        : () => getProducts(limit),
+    queryFn: () =>
+      getProductsByFilter({ limit, type, category, auction_id: id }),
   });
 
   if (isPending) return <Loader />;
-  if (data.length == 0) return <div>No Items Found</div>;
+
+  const products = data?.products;
+
+  if (products?.length == 0) return <div>No Items Found</div>;
 
   return (
     <StyledHomePageItemsDiv alignment="flex-start" gap="2.4rem">
-      {data.map((d) => {
+      {products.map((d) => {
         if (d.type == "Buynow") {
           return (
             <BuyNowCard

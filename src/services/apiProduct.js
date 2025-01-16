@@ -1,6 +1,4 @@
-import { getAuctions } from "./apiAuction";
 import { getCurrentUser } from "./apiAuth";
-import { getCategory } from "./apiCategory";
 import { getOffer } from "./apiOffer";
 import supabase from "./supabase";
 
@@ -16,6 +14,38 @@ export const getProducts = async (limit) => {
   }
 
   return products;
+};
+
+export const getProductsByFilter = async ({
+  type,
+  auction_id,
+  category,
+  limit,
+}) => {
+  let auction = supabase.from("auctions").select("*").neq("isEnded", true);
+  let products = supabase.from("products").select("*").neq("isSold", true);
+
+  if (category) {
+    products = products.eq("category", category).limit(limit);
+  }
+
+  if (limit) {
+    products = products.limit(limit);
+  }
+
+  if (type == "auction") {
+    auction = auction.eq("id", auction_id);
+    products = products.eq("auction", auction_id);
+  }
+
+  let { data: selectedAuction, error: aucError } = await auction;
+  let { data: selectedProducts, error } = await products;
+
+  if (error || aucError) {
+    throw new Error(error.message || aucError.message);
+  }
+
+  return { auction: selectedAuction, products: selectedProducts };
 };
 
 export const getProductsByCurrentSelection = async (curr_id, id) => {
