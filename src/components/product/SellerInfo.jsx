@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getSellerInfo } from "../../services/apiUser";
 import { convertDate, convertPercent } from "../helper/helper";
+import Loader from "../../ui/Loader";
 
 const StyledSellerInfoDiv = styled.div`
   display: flex;
@@ -58,9 +59,7 @@ export default function SellerInfo({ id }) {
     queryFn: () => getSellerInfo(id),
   });
 
-  if (isPending) return <div>Loading</div>;
-
-  console.log(data);
+  if (isPending) return <Loader />;
 
   return (
     <StyledSellerInfoDiv>
@@ -77,7 +76,9 @@ export default function SellerInfo({ id }) {
           </p>
         </StyledSellerInfo>
       </StyledSellerDiv>
-      <StyledButton>Visit Seller</StyledButton>
+      <StyledButton to={`/store/${data.user[0].email}`}>
+        Visit Seller
+      </StyledButton>
     </StyledSellerInfoDiv>
   );
 }

@@ -45,7 +45,13 @@ export const shortenInfo = (info) => {
 
 export const convertPercent = (arr) => {
   let ratings = 0;
+
+  if (arr.length == 0) return "No ratings yet";
   arr.map((r) => (ratings += (r.rating / 5) * 100));
 
   return Number(ratings / arr.length).toFixed(2) + "%";
+};
+
+export const hideEmail = (email) => {
+  return email.split("").slice(0, 3).join("") + "******";
 };

@@ -1,11 +1,10 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { login } from "../services/apiAuth";
-import { useState } from "react";
-import { useLogin } from "../components/authentication/useLogin";
-import toast from "react-hot-toast";
+import { resetPassword } from "../services/apiAuth";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -21,7 +20,7 @@ const StyledFormDiv = styled.div`
   justify-content: center;
   align-items: center;
 
-  height: 60%;
+  height: 40rem;
   width: 40rem;
   background-color: #fff;
   border-radius: 30px;
@@ -62,23 +61,13 @@ const StyledHeader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: 0.7rem;
 `;
 
 const StyledH1 = styled.h1`
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 600;
-`;
-
-const StyledUtils = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-`;
-
-const StyledRemember = styled.div`
-  display: flex;
-  gap: 0.5rem;
 `;
 
 const StyledButton = styled.button`
@@ -90,36 +79,27 @@ const StyledButton = styled.button`
   border: none;
 `;
 
-const StyledParaDiv = styled.div`
-  display: flex;
-  justify-content: center;
-
-  & p {
-    font-size: 0.9rem;
-  }
-`;
-
-export default function Login() {
+export default function ResetPassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { mutate, isLoading } = useLogin();
-  function handleSubmit(e) {
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!email || !password) {
-      toast.error("Please enter your email and password");
+    if (!email) {
+      toast.error("Please enter your email in order to reset");
       return;
     }
+    setLoading(true);
 
-    mutate(
-      { email: email.toLowerCase(), password },
-      {
-        onSettled: () => {
-          setEmail("");
-          setPassword("");
-        },
-      }
-    );
+    const data = await resetPassword(email);
+
+    if (data) {
+      toast.success(
+        "Please click on the reset link on the email sent to your email address"
+      );
+      setLoading(false);
+    }
   }
   return (
     <StyledDiv>
@@ -129,40 +109,24 @@ export default function Login() {
         </StyledBackButton>
         <StyledForm onSubmit={handleSubmit}>
           <StyledHeader>
-            <StyledH1>Welcome Back.</StyledH1>
-            <StyledH1>Please login to your account</StyledH1>
+            <StyledH1>Forgot your email?</StyledH1>
+            <p>
+              Enter your email address and we will send a link for you to reset
+              your password
+            </p>
           </StyledHeader>
           <StyledInputDiv>
             <input
               type="email"
               placeholder="Email Address"
               onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
               value={email}
-              disabled={isLoading}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              disabled={isLoading}
             />
           </StyledInputDiv>
-          <StyledUtils>
-            <StyledRemember>
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">Remember Me</label>
-            </StyledRemember>
-            <Link to="/reset">Forget Password</Link>
-          </StyledUtils>
-          <StyledButton type="submit" disabled={isLoading}>
-            Login
+          <StyledButton type="submit" disabled={loading}>
+            {loading ? "Sending..." : "Send Email"}
           </StyledButton>
-          <StyledParaDiv>
-            <p>
-              Don't Have An Account? <Link to="/register">Sign Up Now</Link>
-            </p>
-          </StyledParaDiv>
         </StyledForm>
       </StyledFormDiv>
     </StyledDiv>

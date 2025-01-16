@@ -19,6 +19,9 @@ import { ModalProvider } from "./Provider/ModalProvider";
 import Categories from "./pages/Categories";
 import { Toaster } from "react-hot-toast";
 import Notification from "./features/Notification";
+import ResetPassword from "./pages/ResetPassword";
+import UpdatePassword from "./pages/UpdatePassword";
+import UserStoreProfile from "./pages/UserStoreProfile";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,12 +39,15 @@ function App() {
         <Routes>
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Homepage />} />
+            <Route path="/store/:userId" element={<UserStoreProfile />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/:type" element={<Marketplace />} />
             <Route path="/:type/:id" element={<Product />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/update" element={<UpdatePassword />} />
           <Route
             path="/dashboard"
             element={

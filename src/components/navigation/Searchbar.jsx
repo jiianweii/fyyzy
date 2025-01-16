@@ -1,20 +1,20 @@
-import {
-  faChevronDown,
-  faChevronUp,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import styled from "styled-components";
-import SearchModal from "../modal/SearchModal";
+
+import { useQuery } from "@tanstack/react-query";
+import { getCategory } from "../../services/apiCategory";
+import Loader from "../../ui/Loader";
 
 const StyledSearchBarDiv = styled.div`
   height: 40px;
   width: 80%;
   display: flex;
+  position: relative;
 `;
 
-const StyledDropDownBtn = styled.button`
+const StyledDropDownBtn = styled.select`
   background-color: var(--btn-color);
   border: none;
   border-top-left-radius: 5px;
@@ -22,14 +22,17 @@ const StyledDropDownBtn = styled.button`
   color: var(--secondary-color);
   height: 100%;
   width: 170px;
+  padding: 0 1rem;
 
   font-weight: 300;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
 
-  position: relative;
+  & option {
+    background-color: #fff;
+    color: #000;
+  }
 `;
 
 const StyledSearchBar = styled.input`
@@ -57,24 +60,34 @@ const StyledSearchBtn = styled.button`
   align-items: center;
 `;
 
-const ToSearch = {
-  input: "",
-  types: [],
-  categories: [],
-};
-
 export default function Searchbar() {
-  const [searchCategory, setSearchCategory] = useState(ToSearch);
-  const [isSearchModal, setIsSearchModal] = useState(false);
+  const [searchCategory, setSearchCategory] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+
+  const { data, isPending } = useQuery({
+    queryKey: ["category"],
+    queryFn: getCategory,
+  });
+
+  function handleSearch() {}
+
+  if (isPending) return <Loader />;
+
   return (
     <StyledSearchBarDiv>
-      <StyledDropDownBtn onClick={() => setIsSearchModal(!isSearchModal)}>
-        All Categories{" "}
-        <FontAwesomeIcon icon={isSearchModal ? faChevronUp : faChevronDown} />
-        {isSearchModal && <SearchModal />}
+      <StyledDropDownBtn onChange={(e) => setSearchCategory(e.target.value)}>
+        <option value="all">All Categories</option>
+        {data.map((d) => {
+          return <option value={d.name}>{d.name}</option>;
+        })}
       </StyledDropDownBtn>
-      <StyledSearchBar type="text" placeholder="Search for anything here" />
-      <StyledSearchBtn>
+
+      <StyledSearchBar
+        type="text"
+        onChange={(e) => setSearchValue(e.target.value)}
+        placeholder="Search for anything here"
+      />
+      <StyledSearchBtn onClick={handleSearch}>
         <FontAwesomeIcon icon={faMagnifyingGlass} />
       </StyledSearchBtn>
     </StyledSearchBarDiv>

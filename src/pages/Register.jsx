@@ -22,7 +22,7 @@ const StyledFormDiv = styled.div`
   align-items: center;
 
   height: 60%;
-  width: 30%;
+  width: 40rem;
   background-color: #fff;
   border-radius: 30px;
   box-shadow: 0 2px 6px #00000050;
@@ -92,14 +92,12 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [number, setNumber] = useState(null);
 
   const validate = async (data) => {
     const res = await data;
     setName("");
     setEmail("");
     setPassword("");
-    setNumber(null);
     setConfirmPassword("");
 
     if (res == null) {
@@ -114,7 +112,7 @@ export default function Register() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!email || !password || !name || !number || !confirmPassword) {
+    if (!email || !password || !name || !confirmPassword) {
       toast.error("Please fill in all of the fields");
       return;
     }
@@ -156,12 +154,6 @@ export default function Register() {
               placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Phone Number"
-              value={number ?? ""}
-              onChange={(e) => setNumber(e.target.value)}
             />
             <input
               type="password"

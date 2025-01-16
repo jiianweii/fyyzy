@@ -1,25 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { StyledHomePageItemsDiv } from "../../styles/GlobalStyled";
 import BuyNowCard from "../cards/BuyNowCard";
-import {
-  getProducts,
-  getProductsByAuctionId,
-  getProductsByCategory,
-} from "../../services/apiProduct";
 import Loader from "../../ui/Loader";
 import { convertCurrency, convertDate } from "../helper/helper";
 import AuctionProductCard from "../cards/AuctionProductCard";
 import TradeCard from "../cards/TradeCard";
+import { getProductsByCurrentSelection } from "../../services/apiProduct";
 
-export default function MarketListing({ limit, type, category, id }) {
+export default function Products({ id }) {
   const { data, isPending } = useQuery({
-    queryKey: ["product", id, category],
-    queryFn:
-      type == "auction"
-        ? () => getProductsByAuctionId(id)
-        : category
-        ? () => getProductsByCategory(category)
-        : () => getProducts(limit),
+    queryKey: ["seller_products"],
+    queryFn: () => getProductsByCurrentSelection(0, id),
   });
 
   if (isPending) return <Loader />;

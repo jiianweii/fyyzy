@@ -1,11 +1,10 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { login } from "../services/apiAuth";
-import { useState } from "react";
-import { useLogin } from "../components/authentication/useLogin";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import styled from "styled-components";
+import { updatePassword } from "../services/apiAuth";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -62,23 +61,13 @@ const StyledHeader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: 0.7rem;
 `;
 
 const StyledH1 = styled.h1`
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 600;
-`;
-
-const StyledUtils = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-`;
-
-const StyledRemember = styled.div`
-  display: flex;
-  gap: 0.5rem;
 `;
 
 const StyledButton = styled.button`
@@ -90,37 +79,44 @@ const StyledButton = styled.button`
   border: none;
 `;
 
-const StyledParaDiv = styled.div`
-  display: flex;
-  justify-content: center;
-
-  & p {
-    font-size: 0.9rem;
-  }
-`;
-
-export default function Login() {
-  const [email, setEmail] = useState("");
+export default function UpdatePassword() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [rePassword, setRePassword] = useState("");
   const [password, setPassword] = useState("");
-  const { mutate, isLoading } = useLogin();
-  function handleSubmit(e) {
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!email || !password) {
-      toast.error("Please enter your email and password");
+    if (!password || !rePassword) {
+      toast.error("Please enter your password");
       return;
     }
 
-    mutate(
-      { email: email.toLowerCase(), password },
-      {
-        onSettled: () => {
-          setEmail("");
-          setPassword("");
-        },
-      }
-    );
+    if (password != rePassword) {
+      toast.error("The passwords you entered did not matched");
+      return;
+    }
+
+    setLoading(true);
+
+    const data = await updatePassword(password);
+
+    if (data) {
+      toast.success("Your password has been reset");
+      setLoading(false);
+      navigate("/login");
+    }
   }
+
+  useEffect(() => {
+    if (!searchParams.get("token")) {
+      navigate("/reset");
+    }
+  }, [searchParams.get("token")]);
+
   return (
     <StyledDiv>
       <StyledFormDiv>
@@ -129,40 +125,27 @@ export default function Login() {
         </StyledBackButton>
         <StyledForm onSubmit={handleSubmit}>
           <StyledHeader>
-            <StyledH1>Welcome Back.</StyledH1>
-            <StyledH1>Please login to your account</StyledH1>
+            <StyledH1>Reset Password</StyledH1>
           </StyledHeader>
           <StyledInputDiv>
-            <input
-              type="email"
-              placeholder="Email Address"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              disabled={isLoading}
-            />
             <input
               type="password"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
               value={password}
-              disabled={isLoading}
+            />
+            <input
+              type="password"
+              placeholder="Re-type Password"
+              onChange={(e) => setRePassword(e.target.value)}
+              disabled={loading}
+              value={rePassword}
             />
           </StyledInputDiv>
-          <StyledUtils>
-            <StyledRemember>
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">Remember Me</label>
-            </StyledRemember>
-            <Link to="/reset">Forget Password</Link>
-          </StyledUtils>
-          <StyledButton type="submit" disabled={isLoading}>
-            Login
+          <StyledButton type="submit" disabled={loading}>
+            {loading ? "Updating..." : "Update Password"}
           </StyledButton>
-          <StyledParaDiv>
-            <p>
-              Don't Have An Account? <Link to="/register">Sign Up Now</Link>
-            </p>
-          </StyledParaDiv>
         </StyledForm>
       </StyledFormDiv>
     </StyledDiv>

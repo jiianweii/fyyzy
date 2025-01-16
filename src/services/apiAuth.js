@@ -51,10 +51,14 @@ export async function register(name, email, password) {
     .from("users")
     .select("*")
     .eq("email", email)
-    .single();
+    .maybeSingle();
 
   if (user) {
     return null;
+  }
+
+  if (userError) {
+    throw new Error(userError.message);
   }
 
   const { data, error } = await supabase.auth.signUp({
@@ -62,11 +66,29 @@ export async function register(name, email, password) {
     password,
   });
 
-  if (error || userError) {
-    throw new Error(error.message || userError.message);
+  if (error) {
+    throw new Error(error.message);
   }
 
   if (data.user.aud === "authenticated") insertUser(name, email);
+
+  return data;
+}
+
+export async function resetPassword(email) {
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function updatePassword(password) {
+  const { data, error } = await supabase.auth.updateUser({ password });
+  if (error) throw new Error(error.message);
+
+  // Make user logout
+  await logout();
 
   return data;
 }

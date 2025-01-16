@@ -6,7 +6,7 @@ const StyledCard = styled.div`
   flex-direction: column;
   background-color: #fff;
   cursor: pointer;
-
+  color: #000;
   height: 400px;
   width: 280px;
 `;
