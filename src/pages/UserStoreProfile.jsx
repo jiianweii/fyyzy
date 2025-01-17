@@ -127,7 +127,12 @@ export default function UserStoreProfile() {
         <UserProfileDiv>
           <UserProfileRef>
             <UserProfileRefInfo>
-              <img src={user.image} />
+              <img
+                src={
+                  user.image ||
+                  "https://mkaqsnyttxfwlrwnoeop.supabase.co/storage/v1/object/public/avatars/profile-default-icon-2048x2045-u3j7s5nj.png"
+                }
+              />
               <Div>
                 <Row>
                   <h1>{user.name}</h1>

@@ -81,7 +81,12 @@ export default function OfferMessage({
   return (
     <TradeOffer>
       <TradeInfo>
-        <img src={currentInfo.products.images[0]} />
+        <img
+          src={
+            currentInfo.products.images[0] ||
+            "https://mkaqsnyttxfwlrwnoeop.supabase.co/storage/v1/object/public/avatars/profile-default-icon-2048x2045-u3j7s5nj.png"
+          }
+        />
         <div>
           <h1>{currentInfo.products.name}</h1>
           <p>

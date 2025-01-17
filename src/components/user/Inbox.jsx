@@ -138,13 +138,6 @@ const ChatUser = styled.div`
   }
 `;
 
-const ChatUserStatus = styled.div`
-  height: 6px;
-  width: 6px;
-  border-radius: 9999px;
-  background-color: ${(props) => (props.active ? "#4fca3f" : "#c73939")};
-`;
-
 const ChatMessages = styled.div`
   display: flex;
   flex-direction: column;
@@ -285,8 +278,8 @@ export default function Inbox() {
                   <ChatPartyInfo>
                     <img
                       src={
-                        chat[2][i]?.image ??
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4n4D5jth4fm4GE7ut7lWW-04lnDO2OkD-sg&s"
+                        chat[2][i]?.image ||
+                        "https://mkaqsnyttxfwlrwnoeop.supabase.co/storage/v1/object/public/avatars/profile-default-icon-2048x2045-u3j7s5nj.png"
                       }
                     />
                     <div>

@@ -65,7 +65,12 @@ export default function SellerInfo({ id }) {
     <StyledSellerInfoDiv>
       <StyledSellerDiv>
         <StyledSellerImg>
-          <img src={data.user[0].image} />
+          <img
+            src={
+              data.user[0].image ||
+              "https://mkaqsnyttxfwlrwnoeop.supabase.co/storage/v1/object/public/avatars/profile-default-icon-2048x2045-u3j7s5nj.png"
+            }
+          />
         </StyledSellerImg>
         <StyledSellerInfo>
           <h1>{data.user[0].name}</h1>
