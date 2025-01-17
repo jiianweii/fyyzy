@@ -54,6 +54,9 @@ const StyledSearchBar = styled.input`
   height: 100%;
   border: 1px solid var(--btn-color);
   flex-grow: 1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+
   &:focus {
     outline: none;
   }
