@@ -22,6 +22,11 @@ import Notification from "./features/Notification";
 import ResetPassword from "./pages/ResetPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import UserStoreProfile from "./pages/UserStoreProfile";
+import OurTeam from "./pages/OurTeam";
+import OurVision from "./pages/OurVision";
+import HowItWorks from "./pages/HowItWorks";
+import ContactUs from "./pages/ContactUs";
+import TermsNConditions from "./pages/TermsNConditions";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +46,14 @@ function App() {
             <Route index element={<Homepage />} />
             <Route path="/store/:userId" element={<UserStoreProfile />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/our-team" element={<OurTeam />} />
+            <Route path="/our-vision" element={<OurVision />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route
+              path="/terms-and-conditions"
+              element={<TermsNConditions />}
+            />
             <Route path="/:type" element={<Marketplace />} />
             <Route path="/:type/:id" element={<Product />} />
           </Route>

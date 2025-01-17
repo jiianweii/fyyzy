@@ -64,34 +64,31 @@ export default function Footer() {
         <StyledFooterNav>
           <StyledFooterNavLinks>
             <h1>Marketplace</h1>
-            <StyledLink color="#fff" to="#">
+            <StyledLink color="#fff" to="/marketplace">
               Buy Now
             </StyledLink>
-            <StyledLink color="#fff" to="#">
-              Auction
-            </StyledLink>
-            <StyledLink color="#fff" to="#">
+            <StyledLink color="#fff" to="/categories">
               Trade Now
             </StyledLink>
           </StyledFooterNavLinks>
           <StyledFooterNavLinks>
             <h1>About</h1>
-            <StyledLink color="#fff" to="#">
+            <StyledLink color="#fff" to="/our-team">
               Our Team
             </StyledLink>
-            <StyledLink color="#fff" to="#">
+            <StyledLink color="#fff" to="/how-it-works">
               How It Works
             </StyledLink>
-            <StyledLink color="#fff" to="#">
+            <StyledLink color="#fff" to="/our-vision">
               Our Vision
             </StyledLink>
           </StyledFooterNavLinks>
           <StyledFooterNavLinks>
             <h1>Support</h1>
-            <StyledLink color="#fff" to="#">
+            <StyledLink color="#fff" to="/contact-us">
               Contact Us
             </StyledLink>
-            <StyledLink color="#fff" to="#">
+            <StyledLink color="#fff" to="/terms-and-conditions">
               Terms & Conditions
             </StyledLink>
           </StyledFooterNavLinks>
