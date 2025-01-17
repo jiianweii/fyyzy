@@ -53,6 +53,7 @@ const StyledSearchBar = styled.input`
   width: 100%;
   height: 100%;
   border: 1px solid var(--btn-color);
+  flex-grow: 1;
   &:focus {
     outline: none;
   }
@@ -72,6 +73,7 @@ const StyledSearchBtn = styled.button`
   color: var(--secondary-color);
   height: 100%;
   width: 50px;
+  flex-shrink: 0;
 
   font-weight: 300;
   display: flex;
