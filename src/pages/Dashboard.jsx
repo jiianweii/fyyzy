@@ -29,6 +29,7 @@ const HomeSection = styled.section`
   justify-content: center;
   align-items: center;
 
+  overflow-y: auto;
   position: relative;
 `;
 

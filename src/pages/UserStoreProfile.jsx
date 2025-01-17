@@ -140,7 +140,11 @@ export default function UserStoreProfile() {
                 </Row>
 
                 <Row>
-                  <p>{convertPercent(reviews)} Positive Reviews</p>
+                  <p>
+                    {data.reviews.length == 0
+                      ? "No reviews yet "
+                      : convertPercent(data.reviews) + " Positive Reviews "}
+                  </p>
                   <p>|</p>
                   <p>{products.length} Products Listed</p>
                   <p>|</p>
@@ -152,7 +156,7 @@ export default function UserStoreProfile() {
           <UserProfileDetails>
             <UserProfileInfo width={"30%"}>
               <h1>About Us</h1>
-              <p>{user.bio}</p>
+              <p>{user.bio || `${user.name} has no information yet`}</p>
             </UserProfileInfo>
             <UserProfileInfo width={"65%"}>
               <h1>Review ({reviews.length})</h1>

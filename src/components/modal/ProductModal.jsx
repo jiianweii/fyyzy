@@ -251,7 +251,12 @@ export default function ProductModal() {
     }
   }
 
-  if (isPending) return <Loader />;
+  if (isPending)
+    return (
+      <FullScreen>
+        <Loader />
+      </FullScreen>
+    );
 
   return (
     <FullScreen

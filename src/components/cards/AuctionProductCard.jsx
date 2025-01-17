@@ -93,7 +93,11 @@ export default function AuctionProductCard({
         <StyledCardBtmHeader>
           <StyledBiddingDiv>
             <p>{data.length} Bids</p>
-            <h1>{convertCurrency(data[0].bidOffer) ?? biddingPrice}</h1>
+            <h1>
+              {data[0]?.bidOffer
+                ? convertCurrency(data[0]?.bidOffer)
+                : convertCurrency(biddingPrice)}
+            </h1>
           </StyledBiddingDiv>
           <h1>{date}</h1>
         </StyledCardBtmHeader>

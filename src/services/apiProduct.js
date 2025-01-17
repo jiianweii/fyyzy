@@ -20,13 +20,28 @@ export const getProductsByFilter = async ({
   type,
   auction_id,
   category,
+  searchSort,
   limit,
+  categories,
+  value,
 }) => {
   let auction = supabase.from("auctions").select("*").neq("isEnded", true);
   let products = supabase.from("products").select("*").neq("isSold", true);
 
-  if (category) {
+  if (categories) {
+    products = products.in("category", categories);
+  }
+
+  if (category && category == "All Categories") {
+    products = products.limit(limit);
+  }
+
+  if (category && category != "All Categories") {
     products = products.eq("category", category).limit(limit);
+  }
+
+  if (value) {
+    products = products.ilike("name", `%${value}%`);
   }
 
   if (limit) {
@@ -36,6 +51,16 @@ export const getProductsByFilter = async ({
   if (type == "auction") {
     auction = auction.eq("id", auction_id);
     products = products.eq("auction", auction_id);
+  } else {
+    products = products.neq("type", "Auction");
+  }
+
+  if (searchSort?.value) {
+    if (searchSort.ascending) {
+      products = products.order(searchSort.value, { ascending: true });
+    } else {
+      products = products.order(searchSort.value, { ascending: false });
+    }
   }
 
   let { data: selectedAuction, error: aucError } = await auction;
@@ -64,14 +89,27 @@ export const getProductsByCurrentSelection = async (curr_id, id) => {
   return products;
 };
 
-export const getProductsByCreator = async () => {
+export const getProductsByCreator = async (sortBy) => {
   let { data, error } = await supabase.auth.getUser();
-  let { data: products, error: prodError } = await supabase
+
+  if (error) throw new Error(error.message);
+
+  let allProducts = supabase
     .from("products")
     .select("*")
     .eq("created_by", data.user.email);
 
-  if (error || prodError) throw new Error(error.message || prodError.message);
+  if (sortBy?.[0]) {
+    if (sortBy[1] == "asc") {
+      allProducts = allProducts.order(sortBy[0], { ascending: true });
+    } else {
+      allProducts = allProducts.order(sortBy[0], { ascending: false });
+    }
+  }
+
+  let { data: products, error: prodError } = await allProducts;
+
+  if (prodError) throw new Error(prodError.message);
 
   return products;
 };
@@ -167,7 +205,7 @@ export const updateProduct = async (product) => {
   }
 
   product.images = imagesUrls;
-  product.tradeOffer = product.tradeOffer.split(",");
+  product.tradeOffer = product?.tradeOffer?.split(",");
   product.created_by = user.email;
 
   let { data, error } = await supabase

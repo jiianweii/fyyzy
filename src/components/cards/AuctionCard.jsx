@@ -97,7 +97,14 @@ const StyledCardBtmHeader = styled.div`
 //     : "No information provided at the moment"
 // }
 
-export default function AuctionCard({ id, color, status, deadline, name }) {
+export default function AuctionCard({
+  id,
+  started,
+  color,
+  status,
+  deadline,
+  name,
+}) {
   const navigate = useNavigate();
   const { data, isPending, error } = useQuery({
     queryKey: ["auctionProduct", id],
@@ -107,7 +114,12 @@ export default function AuctionCard({ id, color, status, deadline, name }) {
   if (isPending) return <Loader />;
 
   return (
-    <StyledCard onClick={() => navigate(`/marketplace?type=auction&id=${id}`)}>
+    <StyledCard
+      onClick={() => {
+        if (started == "STARTED")
+          navigate(`/marketplace?type=auction&id=${id}`);
+      }}
+    >
       <StyledCardImgDiv>
         <img src="/fadzvault.png" />
         <StyledCardStatus>

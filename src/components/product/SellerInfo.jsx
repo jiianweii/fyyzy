@@ -75,8 +75,10 @@ export default function SellerInfo({ id }) {
         <StyledSellerInfo>
           <h1>{data.user[0].name}</h1>
           <p>
-            {convertPercent(data.reviews)} Positive Reviews |
-            {" " + data.products.length + " "}
+            {data.reviews.length == 0
+              ? "No reviews yet "
+              : convertPercent(data.reviews) + " Positive Reviews "}
+            |{" " + data.products.length + " "}
             Products | Since {convertDate(data.user[0].created_at)}
           </p>
         </StyledSellerInfo>

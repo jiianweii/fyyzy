@@ -38,12 +38,23 @@ const StyledCheckBoxDiv = styled.div`
   gap: 0.5rem;
 `;
 
-export default function Sidebar() {
+export default function Sidebar({ setSearchCategories }) {
   const { data, isPending } = useQuery({
     queryKey: ["category"],
     queryFn: getCategory,
   });
+
   const [searchParams, setSearchParams] = useSearchParams();
+
+  function addOrRemoveItems(name) {
+    setSearchCategories((prev) => {
+      if (prev.includes(name)) {
+        return prev.filter((p) => p != name);
+      }
+
+      return [...prev, name];
+    });
+  }
 
   if (isPending) return <Loader />;
 
@@ -51,24 +62,17 @@ export default function Sidebar() {
     <StyledSidebar>
       <StyledMain>
         <StyledH1>Filter</StyledH1>
-        <StyledDiv>
-          <StyledH1>Status</StyledH1>
-          <StyledCheckBoxDiv>
-            <input type="checkbox" id="active" />
-            <label htmlFor="active">Active</label>
-          </StyledCheckBoxDiv>
-          <StyledCheckBoxDiv>
-            <input type="checkbox" id="sold" />
-            <label htmlFor="sold">Sold</label>
-          </StyledCheckBoxDiv>
-        </StyledDiv>
         {!searchParams.get("category") && (
           <StyledDiv>
             <StyledH1>Categories</StyledH1>
             {data.map((d) => {
               return (
                 <StyledCheckBoxDiv>
-                  <input type="checkbox" id={d.name} />
+                  <input
+                    type="checkbox"
+                    onClick={() => addOrRemoveItems(d.name)}
+                    id={d.name}
+                  />
                   <label htmlFor={d.name}>{d.name}</label>
                 </StyledCheckBoxDiv>
               );

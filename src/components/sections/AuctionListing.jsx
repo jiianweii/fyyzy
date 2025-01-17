@@ -20,6 +20,7 @@ export default function AuctionListing({ limit }) {
         return (
           <AuctionCard
             id={d.id}
+            started={isValid}
             color={
               isValid == "STARTED"
                 ? "red"

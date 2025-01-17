@@ -7,11 +7,27 @@ import { convertCurrency, convertDate } from "../helper/helper";
 import AuctionProductCard from "../cards/AuctionProductCard";
 import TradeCard from "../cards/TradeCard";
 
-export default function MarketListing({ limit, type, category, id }) {
+export default function MarketListing({
+  searchSort,
+  value,
+  limit,
+  type,
+  categories,
+  category,
+  id,
+}) {
   const { data, isPending } = useQuery({
-    queryKey: ["product", id, category],
+    queryKey: ["product", id, category, searchSort, categories, value],
     queryFn: () =>
-      getProductsByFilter({ limit, type, category, auction_id: id }),
+      getProductsByFilter({
+        limit,
+        type,
+        searchSort,
+        category,
+        categories,
+        value,
+        auction_id: id,
+      }),
   });
 
   if (isPending) return <Loader />;

@@ -1,12 +1,22 @@
 import { getCurrentUser } from "./apiAuth";
 import supabase from "./supabase";
 
-export const getReviews = async () => {
+export const getReviews = async (sortBy) => {
   const user = await getCurrentUser();
-  let { data, error } = await supabase
+  let allReviews = supabase
     .from("reviews")
     .select("*")
     .eq("seller_id", user.email);
+
+  if (sortBy?.[0]) {
+    if (sortBy[1] == "asc") {
+      allReviews = allReviews.order(sortBy[0], { ascending: true });
+    } else {
+      allReviews = allReviews.order(sortBy[0], { ascending: false });
+    }
+  }
+
+  let { data, error } = await allReviews;
 
   if (error) throw new Error(error.message);
 

@@ -84,7 +84,11 @@ export default function Home() {
           icon={faStar}
           backgroundColor={"#DEBD62"}
           type="RATINGS"
-          number={convertPercent(data.reviews)}
+          number={
+            data.reviews.length == 0
+              ? "No reviews yet "
+              : convertPercent(data.reviews) + " Positive Reviews "
+          }
         />
         {/* <SecInfoCard start={1} end={3} header="Recent Products" />
         <SecInfoCard start={3} end={-1} header="Recent Reviews" /> */}
