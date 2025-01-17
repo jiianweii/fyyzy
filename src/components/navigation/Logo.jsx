@@ -24,6 +24,10 @@ const StyledLogo = styled(Link)`
     ${(props) => props.size == "sm" && "height: 20px;"}
     ${(props) => props.size == "md" && "height: 25px;"}
     ${(props) => props.size == "lg" && "height: 30px;"}
+    @media only screen and (max-width: 425px) {
+      height: 15px;
+      width: 70px;
+    }
   }
 `;
 export default function Logo({ size }) {

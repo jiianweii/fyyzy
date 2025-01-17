@@ -21,12 +21,25 @@ const StyledFooterDiv = styled.div`
   color: #fff;
   height: 250px;
   width: 100%;
+
+  @media only screen and (max-width: 425px) {
+    height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.5rem;
+  }
 `;
 
 const StyledFooterNav = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  @media only screen and (max-width: 425px) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    row-gap: 4rem;
+  }
 `;
 
 const StyledFooterNavLinks = styled.div`
@@ -44,6 +57,10 @@ const StyledSocialMediaDiv = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  @media only screen and (max-width: 425px) {
+    padding: 2rem 0;
+    gap: 1rem;
+  }
 `;
 
 const StyledCopyrightDiv = styled.div`
@@ -55,6 +72,17 @@ const StyledCopyrightDiv = styled.div`
   & h1 {
     font-weight: 400;
   }
+
+  @media only screen and (max-width: 425px) {
+    padding: 2rem 0;
+  }
+`;
+
+const FAVIcon = styled(FontAwesomeIcon)`
+  font-size: ${(props) => props.fontSize};
+  @media only screen and (max-width: 425px) {
+    font-size: 3rem;
+  }
 `;
 
 export default function Footer() {
@@ -64,10 +92,10 @@ export default function Footer() {
         <StyledFooterNav>
           <StyledFooterNavLinks>
             <h1>Marketplace</h1>
-            <StyledLink color="#fff" to="/marketplace">
+            <StyledLink color="#fff" to="/marketplace?marketplace=Buynow">
               Buy Now
             </StyledLink>
-            <StyledLink color="#fff" to="/categories">
+            <StyledLink color="#fff" to="/marketplace?marketplace=Trade">
               Trade Now
             </StyledLink>
           </StyledFooterNavLinks>
@@ -96,16 +124,16 @@ export default function Footer() {
             <h1>Follow Us On</h1>
             <StyledSocialMediaDiv>
               <StyledLink color="#fff" to="#">
-                <FontAwesomeIcon icon={faFacebook} fontSize={"1.2rem"} />
+                <FAVIcon icon={faFacebook} fontSize={"1.2rem"} />
               </StyledLink>
               <StyledLink color="#fff" to="#">
-                <FontAwesomeIcon icon={faX} fontSize={"1.2rem"} />
+                <FAVIcon icon={faX} fontSize={"1.2rem"} />
               </StyledLink>
               <StyledLink color="#fff" to="#">
-                <FontAwesomeIcon icon={faInstagram} fontSize={"1.2rem"} />
+                <FAVIcon icon={faInstagram} fontSize={"1.2rem"} />
               </StyledLink>
               <StyledLink color="#fff" to="#">
-                <FontAwesomeIcon icon={faTiktok} fontSize={"1.2rem"} />
+                <FAVIcon icon={faTiktok} fontSize={"1.2rem"} />
               </StyledLink>
             </StyledSocialMediaDiv>
           </StyledFooterNavLinks>

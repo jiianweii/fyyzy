@@ -20,6 +20,9 @@ const SideBar = styled.aside`
   width: 250px;
   background-color: #fff;
   border-right: 1px solid #00000025;
+  @media only screen and (max-width: 425px) {
+    display: none;
+  }
 `;
 
 const NavBar = styled.nav`

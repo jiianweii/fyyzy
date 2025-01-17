@@ -38,6 +38,16 @@ const Form = styled.form`
   height: 80%;
   overflow-y: auto;
 
+  @media only screen and (max-width: 1440px) {
+    width: 50%;
+  }
+  @media only screen and (max-width: 1024px) {
+    width: 60%;
+  }
+  @media only screen and (max-width: 425px) {
+    width: 80%;
+  }
+
   position: relative;
 
   & input,

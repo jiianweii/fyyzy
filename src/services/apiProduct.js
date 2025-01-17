@@ -21,6 +21,7 @@ export const getProductsByFilter = async ({
   auction_id,
   category,
   searchSort,
+  marketplace,
   limit,
   categories,
   value,
@@ -46,6 +47,10 @@ export const getProductsByFilter = async ({
 
   if (limit) {
     products = products.limit(limit);
+  }
+
+  if (!type && marketplace) {
+    products = products.eq("type", marketplace);
   }
 
   if (type == "auction") {

@@ -15,12 +15,12 @@ export default function Notification() {
 
   const ids =
     isPending ||
-    chat.map((c) => {
+    chat?.map((c) => {
       return c.id;
     });
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && !isPending) {
       const channel = supabase
         .channel("inbox")
         .on(
@@ -30,13 +30,15 @@ export default function Notification() {
             if (
               ids.includes(payload.new.chat_id) &&
               data.email != payload.new.sender_id
-            )
+            ) {
+              console.log("");
               toast(`You have 1 new message from ${payload.new.sender_id}`);
+            }
           }
         )
         .subscribe();
 
       return () => channel.unsubscribe();
     }
-  }, []);
+  }, [isAuthenticated, ids, data?.email]);
 }

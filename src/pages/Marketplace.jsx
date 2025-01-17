@@ -12,6 +12,10 @@ const StyledSection = styled.section`
   min-height: 100vh;
   gap: 2rem;
   width: 80%;
+  @media only screen and (max-width: 425px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const StyledBuyNowDiv = styled.div`
@@ -26,10 +30,18 @@ const StyledHelper = styled.div`
   display: flex;
 
   justify-content: space-between;
+
+  @media only screen and (max-width: 425px) {
+    justify-content: center;
+    gap: 1rem;
+  }
 `;
 
 const StyledSelect = styled.select`
   padding: 0.5rem;
+  @media only screen and (max-width: 425px) {
+    font-size: 0.9rem;
+  }
 `;
 
 export default function Marketplace() {
@@ -73,6 +85,7 @@ export default function Marketplace() {
           <MarketListing
             value={searchParams.get("value")}
             type={searchParams.get("type")}
+            marketplace={searchParams.get("marketplace")}
             searchSort={searchSort}
             categories={categories}
             category={searchParams.get("category")}

@@ -11,19 +11,29 @@ export default function MarketListing({
   searchSort,
   value,
   limit,
+  marketplace,
   type,
   categories,
   category,
   id,
 }) {
   const { data, isPending } = useQuery({
-    queryKey: ["product", id, category, searchSort, categories, value],
+    queryKey: [
+      "product",
+      id,
+      category,
+      searchSort,
+      categories,
+      value,
+      marketplace,
+    ],
     queryFn: () =>
       getProductsByFilter({
         limit,
         type,
         searchSort,
         category,
+        marketplace,
         categories,
         value,
         auction_id: id,

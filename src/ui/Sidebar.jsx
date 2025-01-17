@@ -7,6 +7,9 @@ import { useSearchParams } from "react-router-dom";
 const StyledH1 = styled.h1`
   font-weight: 500;
   font-size: 1.2rem;
+  @media only screen and (max-width: 425px) {
+    font-size: 2rem;
+  }
 `;
 
 const StyledMain = styled.main`
@@ -14,13 +17,16 @@ const StyledMain = styled.main`
   flex-direction: column;
   width: 100%;
   gap: 1rem;
-  padding: 1rem 0;
+  padding: 1rem 2rem;
 `;
 
 const StyledSidebar = styled.aside`
   display: flex;
   justify-content: flex-end;
   width: 25%;
+  @media only screen and (max-width: 425px) {
+    width: 100%;
+  }
 `;
 
 const StyledDiv = styled.div`
@@ -36,6 +42,9 @@ const StyledCheckBoxDiv = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  @media only screen and (max-width: 425px) {
+    font-size: 2rem;
+  }
 `;
 
 export default function Sidebar({ setSearchCategories }) {

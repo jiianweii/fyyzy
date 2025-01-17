@@ -18,6 +18,7 @@ import { convertCurrency, convertDate, convertPercent } from "../helper/helper";
 import Table from "./Table/Table";
 import Offer from "./HomePage/Offer";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const InfoCardDiv = styled.div`
   display: grid;
@@ -26,6 +27,12 @@ const InfoCardDiv = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: 3rem;
   grid-template-rows: auto 200px 1fr;
+
+  @media only screen and (max-width: 425px) {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 1rem;
+  }
 `;
 
 const Button = styled.button`
@@ -37,6 +44,35 @@ const Button = styled.button`
   color: #3c3c3c;
 
   cursor: pointer;
+
+  @media only screen and (max-width: 425px) {
+    font-size: 0.7rem;
+    padding: 0.5rem;
+    width: 50px;
+  }
+`;
+
+const StoreButton = styled(Link)`
+  display: block;
+  font-size: 1rem;
+  padding: 1rem;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+
+  background-color: #ff0000;
+  color: #fff;
+`;
+
+const StoreButtonDiv = styled.div`
+  display: none;
+  justify-content: center;
+  align-items: center;
+  @media only screen and (max-width: 425px) {
+    display: flex;
+  }
 `;
 
 export default function Home() {
@@ -57,6 +93,10 @@ export default function Home() {
 
   return (
     <Div>
+      <StoreButtonDiv>
+        <StoreButton to="/">Back To Store</StoreButton>
+      </StoreButtonDiv>
+
       {isOpenModal && (
         <Offer currentOffer={currentOffer} setIsOpenModal={setIsOpenModal} />
       )}
@@ -87,11 +127,10 @@ export default function Home() {
           number={
             data.reviews.length == 0
               ? "No reviews yet "
-              : convertPercent(data.reviews) + " Positive Reviews "
+              : convertPercent(data.reviews)
           }
         />
-        {/* <SecInfoCard start={1} end={3} header="Recent Products" />
-        <SecInfoCard start={3} end={-1} header="Recent Reviews" /> */}
+
         <MainInfoCard header="All Trade Offers">
           {data.offers.length > 0 ? (
             <Table>

@@ -237,7 +237,12 @@ export default function Offer({ currentOffer, setIsOpenModal }) {
       <OfferDiv>
         <OfferHeader>
           <OfferUser>
-            <img src={current_user.image} />
+            <img
+              src={
+                current_user.image ||
+                "https://mkaqsnyttxfwlrwnoeop.supabase.co/storage/v1/object/public/avatars/profile-default-icon-2048x2045-u3j7s5nj.png"
+              }
+            />
             <div>
               <h1>{current_user.name}</h1>
               <p>@{current_user.email}</p>

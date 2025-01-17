@@ -3,6 +3,7 @@ import { Div, H1 } from "../../styles/GlobalStyled";
 import { useEffect, useState } from "react";
 import { getSettings, updateSettings } from "../../services/apiSettings";
 import toast from "react-hot-toast";
+import { useLogout } from "../authentication/useLogout";
 
 const SettingsDiv = styled.div`
   display: flex;
@@ -60,7 +61,20 @@ const SettingsLayout = styled.div`
   background-color: #fff;
 `;
 
+const LogoutButton = styled.button`
+  display: none;
+  padding: 2rem;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  background-color: #4a8ef3;
+  @media only screen and (max-width: 425px) {
+    display: block;
+  }
+`;
+
 export default function Settings() {
+  const { mutate, isPending } = useLogout();
   const [name, setName] = useState("");
   const [profile, setProfile] = useState("");
   const [bio, setBio] = useState("");
@@ -155,6 +169,7 @@ export default function Settings() {
           </SettingButton>
         </SettingsDiv>
       </SettingsLayout>
+      <LogoutButton onClick={mutate}>Log Out</LogoutButton>
     </Div>
   );
 }

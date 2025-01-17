@@ -18,6 +18,10 @@ const CreateButton = styled.button`
   border-radius: 12px;
   background-color: #fff;
   font-weight: 500;
+
+  @media only screen and (max-width: 425px) {
+    width: 125px;
+  }
 `;
 
 // const initialState = {

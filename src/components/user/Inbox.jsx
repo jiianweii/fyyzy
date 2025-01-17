@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faArrowRightToBracket,
+} from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
 import { getChats, getMessage, sendMessage } from "../../services/apiMessenger";
 import Loader from "../../ui/Loader";
@@ -36,6 +39,10 @@ const ChatGroup = styled.div`
   height: 100%;
   width: 30%;
   overflow-y: auto;
+  @media only screen and (max-width: 425px) {
+    width: 100%;
+    display: ${(props) => props.visibility || "flex"};
+  }
 `;
 
 const ChatParty = styled.div`
@@ -100,6 +107,9 @@ const ChatHeader = styled.div`
     color: #fff;
     font-size: 1.2rem;
   }
+  @media only screen and (max-width: 425px) {
+    align-items: center;
+  }
 `;
 
 const ChatConversation = styled.div`
@@ -108,6 +118,11 @@ const ChatConversation = styled.div`
   width: 70%;
   background-color: #526e97;
   justify-content: space-between;
+
+  @media only screen and (max-width: 425px) {
+    width: 100%;
+    display: ${(props) => props.visibility || "flex"};
+  }
 `;
 
 const Column = styled.div`
@@ -136,6 +151,8 @@ const ChatUser = styled.div`
       font-size: 1.2rem;
     }
   }
+
+  position: relative;
 `;
 
 const ChatMessages = styled.div`
@@ -144,8 +161,13 @@ const ChatMessages = styled.div`
   gap: 0.5rem;
   padding: 1rem;
   max-height: 80vh;
+
   width: 100%;
   overflow-y: auto;
+
+  @media only screen and (max-width: 425px) {
+    max-height: 70vh;
+  }
 `;
 
 const ChatMessage = styled.div`
@@ -179,6 +201,11 @@ const ChatResponder = styled.div`
   width: 100%;
   background-color: #fff;
   padding: 1rem;
+  @media only screen and (max-width: 425px) {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+  }
 
   & input {
     padding: 0.7rem;
@@ -194,7 +221,18 @@ const ChatResponder = styled.div`
   }
 `;
 
+const ChatBackBtn = styled.button`
+  position: absolute;
+  left: 10px;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+`;
+
 export default function Inbox() {
+  // FOR MOBILE USER
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [currentInfo, setCurrentInfo] = useState({});
   const [currentUser, setCurrentUser] = useState({});
@@ -234,6 +272,7 @@ export default function Inbox() {
     setCurrentUser(user);
     setChatId(chatInfo.id);
     getMessages(chatInfo.id);
+    setIsChatOpen(true);
   }
   // TO ENSURE CHAT ARE REMOVED IF BUYER REVIEWED
   function handleClearChat() {
@@ -251,8 +290,6 @@ export default function Inbox() {
     setMessage("");
   }
 
-  console.log(currentInfo);
-
   return (
     <InboxDiv>
       {isOpenModal && (
@@ -264,7 +301,7 @@ export default function Inbox() {
         />
       )}
       <RowDiv>
-        <ChatGroup>
+        <ChatGroup visibility={isChatOpen ? "none" : "flex"}>
           <ChatHeader>
             <h1>My Messages</h1>
           </ChatHeader>
@@ -295,10 +332,13 @@ export default function Inbox() {
               );
             })}
         </ChatGroup>
-        <ChatConversation>
+        <ChatConversation visibility={!isChatOpen ? "none" : "flex"}>
           <Column>
             {currentUser?.name && (
               <ChatUser>
+                <ChatBackBtn onClick={() => setIsChatOpen(false)}>
+                  <FontAwesomeIcon icon={faArrowLeft} color="#fff" />
+                </ChatBackBtn>
                 <h1>{currentUser.name}</h1>
                 {/* <div>
                   <ChatUserStatus active={status} />

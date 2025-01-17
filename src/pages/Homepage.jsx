@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import { StyledHomePageItemsDiv, StyledLink } from "../styles/GlobalStyled";
+import {
+  StyledHomePageItems,
+  StyledHomePageItemsDiv,
+  StyledLink,
+} from "../styles/GlobalStyled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -34,27 +38,27 @@ export default function Homepage() {
   return (
     <StyledHomePage>
       <StyledHomeDiv bg="#4A8EF3">
-        <StyledHomePageItemsDiv>
+        <StyledHomePageItems>
           <StyledHomeH1 color="#fff">Upcoming Auction</StyledHomeH1>
-        </StyledHomePageItemsDiv>
+        </StyledHomePageItems>
         <AuctionListing limit={5} />
       </StyledHomeDiv>
       <StyledHomeDiv bg="#F0F0F0">
-        <StyledHomePageItemsDiv>
+        <StyledHomePageItems>
           <StyledHomeH1 color="#000">All Categories</StyledHomeH1>
           <StyledLink color="#4A8EF3" to="/categories">
             See More <FontAwesomeIcon icon={faChevronRight} fontSize="0.8rem" />
           </StyledLink>
-        </StyledHomePageItemsDiv>
+        </StyledHomePageItems>
         <CategoryListing limit={5} />
       </StyledHomeDiv>
       <StyledHomeDiv bg="#F0F0F0">
-        <StyledHomePageItemsDiv>
+        <StyledHomePageItems>
           <StyledHomeH1 color="#000">Top Picks</StyledHomeH1>
           <StyledLink color="#4A8EF3" to="/marketplace">
             See More <FontAwesomeIcon icon={faChevronRight} fontSize="0.8rem" />
           </StyledLink>
-        </StyledHomePageItemsDiv>
+        </StyledHomePageItems>
         <MarketListing limit={5} />
       </StyledHomeDiv>
     </StyledHomePage>

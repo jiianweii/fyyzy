@@ -12,6 +12,10 @@ const StyledInfoSection = styled.section`
   gap: 1.5rem;
 
   width: 80%;
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StyledInfoSubHeader = styled.h1`
@@ -101,7 +105,11 @@ export default function ProductInfo({ type, data, setIsOpenModal, offers }) {
           <StyledBiddingDiv>
             <StyledBidsDiv>
               <h2>Current Bid</h2>
-              <h1>{convertCurrency(offers[0].bidOffer)}</h1>
+              <h1>
+                {offers[0]?.bidOffer
+                  ? convertCurrency(offers[0].bidOffer)
+                  : convertCurrency(data.biddingPrice)}{" "}
+              </h1>
             </StyledBidsDiv>
             <StyledBidsDiv>
               <h2>Bids</h2>

@@ -9,10 +9,17 @@ const Table = styled.table`
   border-spacing: 0;
   text-align: left;
 
+  @media only screen and (max-width: 425px) {
+    font-size: 0.8rem;
+  }
+
   & th,
   & td {
     align-items: center;
     padding: 8px 16px;
+    @media only screen and (max-width: 425px) {
+      padding: 4px 8px;
+    }
   }
 
   & td {
@@ -21,6 +28,9 @@ const Table = styled.table`
       align-items: center;
       font-weight: 600;
       gap: 1rem;
+      @media only screen and (max-width: 425px) {
+        gap: 0.5rem;
+      }
 
       & img {
         height: 50px;
@@ -40,7 +50,7 @@ const Table = styled.table`
   }
 
   & tr:nth-child(even) {
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid #00000050;
   }
 `;
 

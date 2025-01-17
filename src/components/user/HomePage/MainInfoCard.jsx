@@ -14,6 +14,13 @@ const MainInfoCardDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  @media only screen and (max-width: 425px) {
+    grid-row-start: 2;
+    grid-row-end: -1;
+    grid-column-start: 1;
+    grid-column-end: -1;
+  }
 `;
 
 export default function MainInfoCard({ header, children }) {

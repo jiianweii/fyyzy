@@ -17,6 +17,10 @@ const StyledSearchBarDiv = styled.div`
   width: 80%;
   display: flex;
   position: relative;
+  @media only screen and (max-width: 425px) {
+    width: 50%;
+    height: 30px;
+  }
 `;
 
 const StyledDropDownBtn = styled.button`
@@ -38,6 +42,10 @@ const StyledDropDownBtn = styled.button`
     background-color: #fff;
     color: #000;
   }
+
+  @media only screen and (max-width: 425px) {
+    display: none;
+  }
 `;
 
 const StyledSearchBar = styled.input`
@@ -47,6 +55,12 @@ const StyledSearchBar = styled.input`
   border: 1px solid var(--btn-color);
   &:focus {
     outline: none;
+  }
+  @media only screen and (max-width: 425px) {
+    padding: 2.5px 5px;
+    font-size: 1rem;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
   }
 `;
 
@@ -63,6 +77,10 @@ const StyledSearchBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media only screen and (max-width: 425px) {
+    font-size: 1rem;
+    width: 30px;
+  }
 `;
 
 const SearchDropDown = styled.div`

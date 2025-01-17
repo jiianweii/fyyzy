@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import ProductModal from "../components/modal/ProductModal";
 import { useModalContext } from "../Provider/ModalProvider";
+import BottomBar from "../components/user/BottomBar";
 
 const Section = styled.section`
   display: flex;
@@ -43,6 +44,9 @@ const CloseBtn = styled.button`
   z-index: 1;
 
   cursor: pointer;
+  @media only screen and (max-width: 425px) {
+    display: none;
+  }
 `;
 
 export default function Dashboard() {
@@ -61,6 +65,7 @@ export default function Dashboard() {
         </CloseBtn>
         <Outlet />
       </HomeSection>
+      <BottomBar />
     </Section>
   );
 }

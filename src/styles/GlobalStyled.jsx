@@ -42,6 +42,25 @@ export const StyledHomePageItemsDiv = styled.div`
   flex-wrap: wrap;
   align-items: center;
   width: ${(props) => props.width || "80%"};
+
+  @media only screen and (max-width: 425px) {
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
+export const StyledHomePageItems = styled.div`
+  display: flex;
+  justify-content: ${(props) => props.alignment || "space-between"};
+  gap: ${(props) => props.gap};
+  flex-wrap: wrap;
+  align-items: center;
+  width: ${(props) => props.width || "80%"};
+
+  @media only screen and (max-width: 425px) {
+    width: 90%;
+    justify-content: space-between;
+  }
 `;
 
 export const StyledLink = styled(Link)`
@@ -68,14 +87,22 @@ export const Div = styled.div`
   flex-direction: column;
   padding: 1rem 6rem;
   height: 90%;
-  width: 80%;
+
   gap: 2rem;
 
   color: #fff;
+
+  @media only screen and (max-width: 425px) {
+    width: 100%;
+    padding: 1rem;
+  }
 `;
 
 export const H1 = styled.h1`
   font-size: 2.5rem;
+  @media only screen and (max-width: 425px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const Select = styled.select`

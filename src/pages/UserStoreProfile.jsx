@@ -19,6 +19,10 @@ const UserProfile = styled.section`
 
   min-height: 100vh;
   width: 100%;
+
+  @media only screen and (max-width: 425px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const UserProfileDiv = styled.div`
@@ -52,6 +56,9 @@ const UserProfileProducts = styled.div`
 
   gap: 2rem;
   width: 100%;
+  @media only screen and (max-width: 425px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const UserProfileRef = styled.div`

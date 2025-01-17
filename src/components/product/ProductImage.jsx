@@ -6,6 +6,14 @@ const StyledDiv = styled.div`
   height: 100%;
   gap: 1rem;
   width: 100%;
+
+  @media only screen and (max-width: 768px) {
+    height: 600px;
+  }
+
+  @media only screen and (max-width: 425px) {
+    height: 400px;
+  }
 `;
 
 const StyledSelectionDiv = styled.div`
@@ -17,6 +25,10 @@ const StyledSelectionDiv = styled.div`
     height: 100px;
     width: 100px;
     background-color: #d9d9d9;
+    @media only screen and (max-width: 425px) {
+      height: 60px;
+      width: 60px;
+    }
 
     & img {
       height: 100%;

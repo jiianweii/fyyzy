@@ -29,6 +29,11 @@ const StyledProductInfoDiv = styled.div`
   gap: 4rem;
 
   position: relative;
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    height: 100%;
+  }
 `;
 
 const StyledH1 = styled.h1`
