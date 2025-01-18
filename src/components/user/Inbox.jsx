@@ -19,6 +19,7 @@ const InboxDiv = styled.div`
 
   height: 100%;
   width: 100%;
+
   gap: 2rem;
 
   color: #fff;
@@ -122,12 +123,16 @@ const ChatConversation = styled.div`
   @media only screen and (max-width: 425px) {
     width: 100%;
     display: ${(props) => props.visibility || "flex"};
+    justify-content: flex-start;
   }
 `;
 
 const Column = styled.div`
   display: flex;
   flex-direction: column;
+  @media only screen and (max-width: 425px) {
+    height: 85vh;
+  }
 `;
 
 const ChatUser = styled.div`
@@ -160,13 +165,14 @@ const ChatMessages = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
-  max-height: 80vh;
+  height: 80vh;
 
   width: 100%;
   overflow-y: auto;
 
   @media only screen and (max-width: 425px) {
-    max-height: 70vh;
+    height: 100%;
+    overflow-y: auto;
   }
 `;
 
@@ -201,11 +207,6 @@ const ChatResponder = styled.div`
   width: 100%;
   background-color: #fff;
   padding: 1rem;
-  @media only screen and (max-width: 425px) {
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-  }
 
   & input {
     padding: 0.7rem;

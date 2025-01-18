@@ -23,6 +23,11 @@ const Modal = styled.div`
   display: flex;
   flex-direction: column;
 
+  @media only screen and (max-width: 425px) {
+    height: 100%;
+    width: 100%;
+  }
+
   gap: 1rem;
 `;
 

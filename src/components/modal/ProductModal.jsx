@@ -47,6 +47,9 @@ const Form = styled.form`
   @media only screen and (max-width: 425px) {
     width: 80%;
   }
+  @media only screen and (max-width: 375px) {
+    width: 90%;
+  }
 
   position: relative;
 

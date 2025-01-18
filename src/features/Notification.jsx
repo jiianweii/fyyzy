@@ -13,14 +13,15 @@ export default function Notification() {
     enabled: isAuthenticated,
   });
 
-  const ids =
-    isPending ||
-    chat?.map((c) => {
-      return c.id;
-    });
-
   useEffect(() => {
-    if (isAuthenticated && !isPending) {
+    if (isPending) return;
+    if (isAuthenticated) {
+      const ids =
+        isPending ||
+        chat?.map((c) => {
+          return c.id;
+        });
+
       const channel = supabase
         .channel("inbox")
         .on(
@@ -40,5 +41,5 @@ export default function Notification() {
 
       return () => channel.unsubscribe();
     }
-  }, [isAuthenticated, ids, data?.email]);
+  }, [isAuthenticated, data?.email]);
 }

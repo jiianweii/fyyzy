@@ -12,6 +12,9 @@ const Table = styled.table`
   @media only screen and (max-width: 425px) {
     font-size: 0.8rem;
   }
+  @media only screen and (max-width: 375px) {
+    font-size: 0.7rem;
+  }
 
   & th,
   & td {
@@ -19,6 +22,9 @@ const Table = styled.table`
     padding: 8px 16px;
     @media only screen and (max-width: 425px) {
       padding: 4px 8px;
+    }
+    @media only screen and (max-width: 375px) {
+      padding: 2px 4px;
     }
   }
 

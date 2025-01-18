@@ -13,10 +13,8 @@ const Nav = styled.nav`
   display: none;
   width: 100%;
   background-color: #fff;
+  height: 50px;
 
-  position: absolute;
-  bottom: 0;
-  left: 0;
   @media only screen and (max-width: 425px) {
     display: flex;
   }

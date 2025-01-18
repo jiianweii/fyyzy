@@ -51,6 +51,11 @@ const TradeButton = styled.button`
   background-color: ${(props) => props.bg};
   color: #fff;
   border: none;
+  @media only screen and (max-width: 400px) {
+    padding: 1rem;
+    font-size: 0.8rem;
+    width: 100px;
+  }
 `;
 
 export default function OfferMessage({

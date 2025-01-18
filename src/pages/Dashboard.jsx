@@ -15,6 +15,7 @@ import BottomBar from "../components/user/BottomBar";
 
 const Section = styled.section`
   display: flex;
+  flex-direction: column;
   height: 100vh;
   width: 100vw;
 
@@ -28,7 +29,6 @@ const HomeSection = styled.section`
 
   display: flex;
   justify-content: center;
-  align-items: center;
 
   overflow-y: auto;
   position: relative;

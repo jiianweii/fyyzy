@@ -14,8 +14,16 @@ const SettingsDiv = styled.div`
   gap: ${(props) => props.gap};
   width: ${(props) => props.width || "100%"};
 
+  @media only screen and (max-width: 425px) {
+    font-size: 0.8rem;
+    gap: 3rem;
+  }
+
   & h1 {
     font-size: 1.5rem;
+    @media only screen and (max-width: 425px) {
+      font-size: 1rem;
+    }
   }
 
   & div {

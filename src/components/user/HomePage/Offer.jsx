@@ -31,6 +31,11 @@ const OfferDiv = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  @media only screen and (max-width: 425px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const OfferHeader = styled.div`
@@ -43,6 +48,10 @@ const OfferHeader = styled.div`
   color: #fff;
 
   position: relative;
+
+  @media only screen and (max-width: 425px) {
+    justify-content: center;
+  }
 `;
 
 const OfferUser = styled.div`
@@ -63,10 +72,19 @@ const OfferUser = styled.div`
     flex-direction: column;
     & h1 {
       font-size: 1.7rem;
+      @media only screen and (max-width: 375px) {
+        font-size: 1.3rem;
+      }
     }
 
     & p {
       font-size: 0.9rem;
+      @media only screen and (max-width: 375px) {
+        font-size: 0.8rem;
+      }
+    }
+    @media only screen and (max-width: 375px) {
+      gap: 0.2rem;
     }
   }
 `;
@@ -83,6 +101,10 @@ const OfferExitBtn = styled.button`
   position: absolute;
   top: 0;
   right: 0;
+
+  @media only screen and (max-width: 425px) {
+    padding: 0.8rem;
+  }
 `;
 
 const UserButton = styled.button`
@@ -92,6 +114,10 @@ const UserButton = styled.button`
   background-color: #f55a5a;
   color: #fff;
   border: none;
+  @media only screen and (max-width: 375px) {
+    height: 40px;
+    width: 100px;
+  }
 `;
 
 const OfferZone = styled.div`

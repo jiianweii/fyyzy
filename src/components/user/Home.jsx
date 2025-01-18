@@ -87,7 +87,7 @@ export default function Home() {
 
   let price = 0;
 
-  data.products.map((d) =>
+  data?.products.map((d) =>
     d.isSold && d.sold_to ? (price += d.price || d.biddingPrice) : price
   );
 
