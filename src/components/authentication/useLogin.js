@@ -10,7 +10,9 @@ export const useLogin = () => {
     mutationFn: ({ email, password }) => login(email, password),
     onSuccess: (user) => {
       queryClient.setQueriesData(["user"], user);
-      navigate("/dashboard/home", { replace: true });
+      if (user.user.aud == "authenticated") {
+        navigate("/", { replace: true });
+      }
     },
     onError: (err) => {
       toast.error(err.message);
