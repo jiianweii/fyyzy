@@ -84,6 +84,7 @@ export const getProductsByCurrentSelection = async (curr_id, id) => {
     .select("*")
     .neq("id", curr_id)
     .neq("isSold", true)
+    .neq("type", "Auction")
     .eq("created_by", id)
     .limit(5);
 

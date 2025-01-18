@@ -15,6 +15,8 @@ export default function OtherListing({ seller_id, curr_id }) {
 
   if (isPending) return <Loader />;
 
+  if (data.length == 0) return <div>No other items can be found</div>;
+
   return (
     <StyledHomePageItemsDiv alignment="flex-start" width="100%" gap="2.4rem">
       {data.map((d) => {
@@ -25,18 +27,6 @@ export default function OtherListing({ seller_id, curr_id }) {
               id={d.id}
               name={d.name}
               price={convertCurrency(d.price)}
-              date={convertDate(d.created_at)}
-              images={d.images}
-            />
-          );
-        }
-        if (d.type == "Auction") {
-          return (
-            <AuctionProductCard
-              key={d.id}
-              id={d.id}
-              name={d.name}
-              biddingPrice={convertCurrency(d.biddingPrice)}
               date={convertDate(d.created_at)}
               images={d.images}
             />
