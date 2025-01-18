@@ -44,7 +44,7 @@ export default function MarketListing({
 
   const products = data?.products;
 
-  if (products?.length == 0) return <div>No Items Found</div>;
+  if (!products) return <div>No Items Found</div>;
 
   return (
     <StyledHomePageItemsDiv alignment="flex-start" gap="2.4rem">

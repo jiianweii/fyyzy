@@ -13,6 +13,8 @@ export default function AuctionListing({ limit }) {
 
   if (isPending) return <Loader />;
 
+  if (data.length == 0) return <div>No Auction at the moment</div>;
+
   return (
     <StyledHomePageItemsDiv alignment="flex-start" gap="2.4rem">
       {data.map((d) => {

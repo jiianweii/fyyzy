@@ -26,6 +26,11 @@ const StyledSellerImg = styled.div`
   width: 35px;
   height: 35px;
 
+  @media only screen and (max-width: 425px) {
+    width: 40px;
+    height: 30px;
+  }
+
   & img {
     width: 100%;
     height: 100%;
@@ -36,13 +41,23 @@ const StyledSellerImg = styled.div`
 const StyledSellerInfo = styled.div`
   display: flex;
   flex-direction: column;
+  @media only screen and (max-width: 425px) {
+    width: 100%;
+    gap: 0.2rem;
+  }
 
   & h1 {
     font-size: 1.2rem;
+    @media only screen and (max-width: 425px) {
+      font-size: 1rem;
+    }
   }
 
   & p {
     font-size: 0.9rem;
+    @media only screen and (max-width: 425px) {
+      font-size: 0.7rem;
+    }
   }
 `;
 
@@ -51,6 +66,12 @@ const StyledButton = styled(Link)`
   background-color: #4a8ef3;
   text-decoration: none;
   color: #fff;
+
+  @media only screen and (max-width: 425px) {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }
 `;
 
 export default function SellerInfo({ id }) {

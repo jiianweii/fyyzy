@@ -12,6 +12,8 @@ export default function CategoryListing({ limit, width }) {
 
   if (isPending) return <Loader />;
 
+  if (data.length == 0) return <div>No categories at the moment</div>;
+
   return (
     <StyledHomePageItemsDiv alignment="flex-start" gap="2.4rem" width={width}>
       {data.map((d) => {
