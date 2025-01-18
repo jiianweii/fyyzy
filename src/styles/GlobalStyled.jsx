@@ -85,8 +85,9 @@ export const StyledMiniLink = styled.div`
 export const Div = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem 6rem;
+  padding: 3rem 6rem;
   height: 90%;
+  width: 80%;
 
   gap: 2rem;
 

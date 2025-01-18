@@ -15,11 +15,15 @@ import BottomBar from "../components/user/BottomBar";
 
 const Section = styled.section`
   display: flex;
-  flex-direction: column;
+
   height: 100vh;
   width: 100vw;
 
   position: relative;
+
+  @media only screen and (max-width: 425px) {
+    flex-direction: column;
+  }
 `;
 
 const HomeSection = styled.section`
