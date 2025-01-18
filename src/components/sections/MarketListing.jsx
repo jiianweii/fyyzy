@@ -48,7 +48,7 @@ export default function MarketListing({
 
   return (
     <StyledHomePageItemsDiv alignment="flex-start" gap="2.4rem">
-      {products.map((d) => {
+      {products?.map((d) => {
         if (d.type == "Buynow") {
           return (
             <BuyNowCard

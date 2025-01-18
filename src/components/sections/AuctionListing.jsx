@@ -17,7 +17,7 @@ export default function AuctionListing({ limit }) {
 
   return (
     <StyledHomePageItemsDiv alignment="flex-start" gap="2.4rem">
-      {data.map((d) => {
+      {data?.map((d) => {
         const isValid = compareDate(d.startDate, d.endDate);
         return (
           <AuctionCard

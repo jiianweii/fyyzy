@@ -16,7 +16,7 @@ export default function CategoryListing({ limit, width }) {
 
   return (
     <StyledHomePageItemsDiv alignment="flex-start" gap="2.4rem" width={width}>
-      {data.map((d) => {
+      {data?.map((d) => {
         return (
           <CategoryCard imgsrc={d.image} name={d.name}>
             <h1>{d.name}</h1>
