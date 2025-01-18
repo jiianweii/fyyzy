@@ -11,7 +11,7 @@ export const useLogin = () => {
     onSuccess: (user) => {
       queryClient.setQueriesData(["user"], user);
       if (user.user.aud == "authenticated") {
-        navigate("/", { replace: true });
+        navigate("/dashboard/home", { replace: true });
       }
     },
     onError: (err) => {

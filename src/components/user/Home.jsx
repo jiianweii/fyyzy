@@ -108,13 +108,13 @@ export default function Home() {
           icon={faBagShopping}
           backgroundColor={"#62DEC9"}
           type="PRODUCTS"
-          number={data.products.length}
+          number={data?.products.length}
         />
         <MiniInfoCard
           icon={faBook}
           backgroundColor={"#62BDDE"}
           type="REVIEWS"
-          number={data.reviews.length}
+          number={data?.reviews.length}
         />
         <MiniInfoCard
           icon={faMoneyBill1Wave}
@@ -127,14 +127,14 @@ export default function Home() {
           backgroundColor={"#DEBD62"}
           type="RATINGS"
           number={
-            data.reviews.length == 0
+            data?.reviews.length == 0
               ? "No reviews yet "
               : convertPercent(data.reviews)
           }
         />
 
         <MainInfoCard header="All Trade Offers">
-          {data.offers.length > 0 ? (
+          {data?.offers.length > 0 ? (
             <Table>
               <thead>
                 <th>DATE CREATED</th>
@@ -144,7 +144,7 @@ export default function Home() {
                 <th>ACTION</th>
               </thead>
               <tbody>
-                {data.offers.map((d) => {
+                {data?.offers.map((d) => {
                   const product = data.products.find(
                     (p) => p.id == d.product_id
                   );

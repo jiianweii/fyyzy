@@ -1,10 +1,11 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { resetPassword } from "../services/apiAuth";
+import { useUser } from "../components/authentication/useUser";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -82,6 +83,15 @@ const StyledButton = styled.button`
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const { isAuthenticated } = useUser();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard/home");
+    }
+  }, [isAuthenticated]);
 
   async function handleSubmit(e) {
     e.preventDefault();

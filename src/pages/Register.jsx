@@ -1,11 +1,12 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { register } from "../services/apiAuth";
 import { dataTagErrorSymbol } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { useUser } from "../components/authentication/useUser";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -131,6 +132,15 @@ export default function Register() {
 
     validate(data);
   }
+
+  const navigate = useNavigate();
+  const { isAuthenticated } = useUser();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard/home");
+    }
+  }, [isAuthenticated]);
 
   return (
     <StyledDiv>
