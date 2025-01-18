@@ -8,19 +8,19 @@ import { findChat } from "../services/apiChat";
 export default function Notification() {
   const { data, isAuthenticated } = useUser();
   const { data: chat, isPending } = useQuery({
-    queryKey: ["chatroom"],
+    queryKey: ["chatroom", data],
     queryFn: () => findChat(data.email),
     enabled: isAuthenticated,
   });
 
   useEffect(() => {
-    if (isPending) return;
+    if (isPending || !chat) return;
+    console.log(chat);
+
     if (isAuthenticated) {
-      const ids =
-        isPending ||
-        chat?.map((c) => {
-          return c.id;
-        });
+      const ids = chat.map((c) => {
+        return c.id;
+      });
 
       const channel = supabase
         .channel("inbox")

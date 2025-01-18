@@ -240,7 +240,7 @@ export default function Inbox() {
   const [chatId, setChatId] = useState(null);
   const [message, setMessage] = useState("");
   const [currentChat, setCurrentChat] = useState([]);
-  const { data: chat, isPending: isPendingChat } = useQuery({
+  const { data: chat, isLoading: isPendingChat } = useQuery({
     queryKey: ["chat"],
     queryFn: getChats,
   });

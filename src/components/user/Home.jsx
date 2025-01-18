@@ -78,12 +78,12 @@ const StoreButtonDiv = styled.div`
 export default function Home() {
   const [currentOffer, setCurrentOffer] = useState({});
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const { data, isPending } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["info"],
     queryFn: getUserInfo,
   });
 
-  if (isPending) return <Loader />;
+  if (isLoading) return <Loader />;
 
   let price = 0;
 
