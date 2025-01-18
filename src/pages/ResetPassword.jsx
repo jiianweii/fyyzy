@@ -91,7 +91,7 @@ export default function ResetPassword() {
     if (isAuthenticated) {
       navigate("/dashboard/home");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   async function handleSubmit(e) {
     e.preventDefault();

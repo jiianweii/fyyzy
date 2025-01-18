@@ -129,7 +129,7 @@ export default function Login() {
     if (isAuthenticated) {
       navigate("/dashboard/home");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <StyledDiv>

@@ -140,7 +140,7 @@ export default function Register() {
     if (isAuthenticated) {
       navigate("/dashboard/home");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <StyledDiv>
