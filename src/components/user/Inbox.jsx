@@ -131,7 +131,7 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
   @media only screen and (max-width: 425px) {
-    height: 85vh;
+    height: 100%;
   }
 `;
 

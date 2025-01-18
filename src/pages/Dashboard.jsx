@@ -16,13 +16,14 @@ import BottomBar from "../components/user/BottomBar";
 const Section = styled.section`
   display: flex;
 
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
 
   position: relative;
 
   @media only screen and (max-width: 425px) {
     flex-direction: column;
+    justify-content: space-between;
   }
 `;
 

@@ -10,9 +10,6 @@ const Table = styled.table`
   text-align: left;
 
   @media only screen and (max-width: 425px) {
-    font-size: 0.8rem;
-  }
-  @media only screen and (max-width: 375px) {
     font-size: 0.7rem;
   }
 
